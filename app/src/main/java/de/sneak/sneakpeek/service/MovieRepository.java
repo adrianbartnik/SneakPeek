@@ -6,8 +6,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import de.sneak.sneakpeek.data.Movie;
 import de.sneak.sneakpeek.data.Score11Movie;
 import de.sneak.sneakpeek.util.Util;
 import okhttp3.ResponseBody;
@@ -29,6 +32,7 @@ public class MovieRepository {
     private static List<String> moviePredictions;
     private static List<String> previousMovies;
     private static List<Score11Movie> moviesWithStudios;
+    private static Map<String, Movie> movieInformation = new HashMap<>();
 
 
     private MovieRepository() {
@@ -144,11 +148,10 @@ public class MovieRepository {
 
         return predictionService.getPredictions()
                 .subscribeOn(Schedulers.newThread())
-                .map(new Func1<ResponseBody, List<String>>() {
+                .flatMap(new Func1<ResponseBody, Observable<String>>() {
                     @Override
-                    public List<String> call(ResponseBody responseBody) {
-
-                        String currentWeek = "No Response";
+                    public Observable<String> call(ResponseBody responseBody) {
+                        String currentWeek;
 
                         try {
                             String response = responseBody.string();
@@ -158,19 +161,43 @@ public class MovieRepository {
 
                             String[] weekAndMovies = currentWeek.split("###");
 
-                            return Arrays.asList(Arrays.copyOfRange(weekAndMovies, 1, weekAndMovies.length));
+                            return Observable.from(Arrays.asList(Arrays.copyOfRange(weekAndMovies, 1, weekAndMovies.length)));
 
                         } catch (IOException exception) {
                             Log.e(TAG, "Failed to decode response", exception);
-                            return Collections.singletonList(currentWeek);
+                            return Observable.empty();
                         }
                     }
                 })
+                .map(new Func1<String, String>() {
+                    @Override
+                    public String call(String title) {
+                        return title.substring(title.indexOf("-") + 1).trim();
+                    }
+                })
+                .toList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(new Action1<List<String>>() {
                     @Override
                     public void call(List<String> list) {
                         moviePredictions = list;
+                    }
+                });
+    }
+
+    public Observable<Movie> fetchFullMovieInformation(final String title) {
+
+        if (movieInformation.containsKey(title)) {
+            return Observable.just(movieInformation.get(title));
+        }
+
+        return omdbService.getMovie(title)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(new Action1<Movie>() {
+                    @Override
+                    public void call(Movie movie) {
+                        movieInformation.put(title, movie);
                     }
                 });
     }

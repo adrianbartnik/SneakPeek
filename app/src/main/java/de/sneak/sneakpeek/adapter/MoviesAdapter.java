@@ -26,7 +26,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         notifyDataSetChanged();
     }
 
-    public String getTitleStudioTuple(int position) {
+    public String getTitle(int position) {
         return movieTitles.get(position);
     }
 

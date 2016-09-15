@@ -8,4 +8,5 @@
 * Darker Theme for Cinema
 * Add Crashlytics
 * Release in the Playstore
-* Differentiate  between distributor and studio
+* Differentiate between distributor and studio
+* Adding animations

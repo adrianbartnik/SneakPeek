@@ -60,17 +60,23 @@ public class MovieFragment extends Fragment {
         moviesAdapter = new MoviesAdapter(new ArrayList<String>(), new MoviesAdapter.MovieViewHolder.ClickListener() {
             @Override
             public void onItemClicked(int position) {
-                String titleStudioTuple = moviesAdapter.getTitleStudioTuple(position);
-
-//                MovieRepository.getInstance().fetchMovie(titleStudioTuple.title)
+//                final String title = moviesAdapter.getTitle(position);
+//
+//                Subscription subscription = MovieRepository.getInstance().fetchFullMovieInformation(title)
 //                        .subscribe(new Action1<Movie>() {
 //                            @Override
 //                            public void call(Movie movie) {
-////                                Intent intent = new Intent(getContext(), MovieActivity.class);
-////                                startActivity(intent);
-//                                Log.d(TAG, "Retrieved :" + movie);
+//                                startActivity(MovieActivity.StartMovieActivity(getContext(), movie));
+//                            }
+//                        }, new Action1<Throwable>() {
+//                            @Override
+//                            public void call(Throwable throwable) {
+//                                Toast.makeText(getContext(), "Failed to fetch information for " + title, Toast.LENGTH_SHORT).show();
+//                                Log.e(TAG, "Failed to fetch information for " + title, throwable);
 //                            }
 //                        });
+//
+//                subscriptions.add(subscription);
             }
         });
 
