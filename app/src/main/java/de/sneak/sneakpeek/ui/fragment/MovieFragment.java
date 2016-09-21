@@ -17,7 +17,9 @@ import java.util.List;
 
 import de.sneak.sneakpeek.R;
 import de.sneak.sneakpeek.adapter.MoviesAdapter;
+import de.sneak.sneakpeek.data.Movie;
 import de.sneak.sneakpeek.service.MovieRepository;
+import de.sneak.sneakpeek.ui.MovieActivity;
 import rx.Subscription;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -60,36 +62,35 @@ public class MovieFragment extends Fragment {
         moviesAdapter = new MoviesAdapter(new ArrayList<String>(), new MoviesAdapter.MovieViewHolder.ClickListener() {
             @Override
             public void onItemClicked(int position) {
-//                final String title = moviesAdapter.getTitle(position);
-//
-//                Subscription subscription = MovieRepository.getInstance().fetchFullMovieInformation(title)
-//                        .subscribe(new Action1<Movie>() {
-//                            @Override
-//                            public void call(Movie movie) {
-//                                startActivity(MovieActivity.StartMovieActivity(getContext(), movie));
-//                            }
-//                        }, new Action1<Throwable>() {
-//                            @Override
-//                            public void call(Throwable throwable) {
-//                                Toast.makeText(getContext(), "Failed to fetch information for " + title, Toast.LENGTH_SHORT).show();
-//                                Log.e(TAG, "Failed to fetch information for " + title, throwable);
-//                            }
-//                        });
-//
-//                subscriptions.add(subscription);
+                final String title = moviesAdapter.getTitle(position);
+
+                Subscription subscription = MovieRepository.getInstance().fetchFullMovieInformation(title)
+                        .subscribe(new Action1<Movie>() {
+                            @Override
+                            public void call(Movie movie) {
+                                startActivity(MovieActivity.StartMovieActivity(getContext(), movie));
+                            }
+                        }, new Action1<Throwable>() {
+                            @Override
+                            public void call(Throwable throwable) {
+                                Toast.makeText(getContext(), "Failed to fetch information for " + title, Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, "Failed to fetch information for " + title, throwable);
+                            }
+                        });
+
+                subscriptions.add(subscription);
             }
         });
 
         recyclerView.setAdapter(moviesAdapter);
 
-        subscriptions = new CompositeSubscription();
-
         return swipeRefreshLayout;
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onResume() {
+        super.onResume();
+        subscriptions = new CompositeSubscription();
         setMovies();
     }
 

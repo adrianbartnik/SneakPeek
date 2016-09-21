@@ -81,28 +81,6 @@ public class Movie implements Parcelable {
     @Expose
     public String response;
 
-//    {"Title":"Memento",
-//            "Year":"2000",
-//            "Rated":"R",
-//            "Released":"25 May 2001",
-//            "Runtime":"113 min",
-//            "Genre":"Mystery, Thriller",
-//            "Director":"Christopher Nolan",
-//            "Writer":"Christopher Nolan (screenplay), Jonathan Nolan (short story \"Memento Mori\")",
-//            "Actors":"Guy Pearce, Carrie-Anne Moss, Joe Pantoliano, Mark Boone Junior",
-//            "Plot":"A man juggles searching for his wife's murderer and keeping his short-term memory loss from being an obstacle.",
-//            "Language":"English",
-//            "Country":"USA",
-//            "Awards":"Nominated for 2 Oscars. Another 54 wins & 55 nominations.",
-//            "Poster":"http://ia.media-imdb.com/images/M/MV5BMTc4MjUxNDAwN15BMl5BanBnXkFtZTcwMDMwNDg3OA@@._V1_SX300.jpg",
-//            "Metascore":"80",
-//            "imdbRating":"8.5",
-//            "imdbVotes":"849,921",
-//            "imdbID":"tt0209144",
-//            "Type":"movie",
-//            "Response":"True"}
-
-
     public Movie() {
     }
 

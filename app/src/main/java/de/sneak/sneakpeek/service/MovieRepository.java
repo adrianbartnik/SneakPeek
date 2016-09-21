@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import de.sneak.sneakpeek.data.Movie;
 import de.sneak.sneakpeek.data.Score11Movie;
@@ -192,13 +193,9 @@ public class MovieRepository {
         }
 
         return omdbService.getMovie(title)
+                .timeout(10, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(new Action1<Movie>() {
-                    @Override
-                    public void call(Movie movie) {
-                        movieInformation.put(title, movie);
-                    }
-                });
+                .doOnNext(new Action1<Movie>() {@Override public void call(Movie movie) {movieInformation.put(title, movie);}});
     }
 }
