@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import de.sneak.sneakpeek.R;
 import de.sneak.sneakpeek.data.Movie;
+import de.sneak.sneakpeek.util.Util;
 
 public class MovieActivity extends AppCompatActivity {
 
@@ -29,6 +30,9 @@ public class MovieActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        setTheme(Util.GetUseLightTheme(getApplication()) ? R.style.SneakPeekLight : R.style.SneakPeekDark);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
         setSupportActionBar((Toolbar) findViewById(R.id.activity_movie_toolbar));

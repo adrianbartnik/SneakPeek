@@ -8,6 +8,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -15,6 +19,7 @@ import de.sneak.sneakpeek.R;
 import de.sneak.sneakpeek.ui.fragment.MovieFragment;
 import de.sneak.sneakpeek.ui.fragment.PreviousMoviesFragment;
 import de.sneak.sneakpeek.ui.fragment.StudiosFragment;
+import de.sneak.sneakpeek.util.Util;
 import io.fabric.sdk.android.Fabric;
 
 public class SneakPeekActivity extends AppCompatActivity {
@@ -26,6 +31,9 @@ public class SneakPeekActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        setTheme(Util.GetUseLightTheme(getApplication()) ? R.style.SneakPeekLight : R.style.SneakPeekDark);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -62,6 +70,28 @@ public class SneakPeekActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.main_menu_switch_theme:
+                Util.SetUseDarkTheme(getApplication(), !Util.GetUseLightTheme(getApplication()));
+                recreate();
+                return true;
+            case R.id.main_menu_about:
+                Toast.makeText(this, "Ma", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public static class SneekPeekPagerAdapter extends FragmentPagerAdapter {

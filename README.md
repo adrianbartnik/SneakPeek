@@ -3,7 +3,6 @@
 ## Todo
 * Add card view
 * Better sorting of Studios: e.g. https://github.com/AndroidDeveloperLB/LollipopContactsRecyclerViewFastScroller
-* Darker Theme for Cinema
 * Release in the Playstore
 * Differentiate between distributor and studio
 * Adding animations

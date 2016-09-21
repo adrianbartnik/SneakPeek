@@ -11,4 +11,6 @@
     <string name="activity_main_imdb_rating">IMDB Rating</string>
     <string name="activity_main_writer">Writer</string>
     <string name="activity_main_released">Released</string>
+    <string name="main_menu_about">About</string>
+    <string name="main_menu_switch_theme">Switch theme</string>
 </resources>

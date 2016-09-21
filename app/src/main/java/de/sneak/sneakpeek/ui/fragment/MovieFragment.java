@@ -68,7 +68,11 @@ public class MovieFragment extends Fragment {
                         .subscribe(new Action1<Movie>() {
                             @Override
                             public void call(Movie movie) {
-                                startActivity(MovieActivity.StartMovieActivity(getContext(), movie));
+                                if (movie.title == null) {
+                                    Toast.makeText(getContext(), "Failed to retrieve information for " + title, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    startActivity(MovieActivity.StartMovieActivity(getContext(), movie));
+                                }
                             }
                         }, new Action1<Throwable>() {
                             @Override
