@@ -9,10 +9,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.crashlytics.android.Crashlytics;
+
 import de.sneak.sneakpeek.R;
 import de.sneak.sneakpeek.ui.fragment.MovieFragment;
 import de.sneak.sneakpeek.ui.fragment.PreviousMoviesFragment;
 import de.sneak.sneakpeek.ui.fragment.StudiosFragment;
+import io.fabric.sdk.android.Fabric;
 
 public class SneakPeekActivity extends AppCompatActivity {
 
@@ -25,6 +28,8 @@ public class SneakPeekActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Fabric.with(this, new Crashlytics());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);

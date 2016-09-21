@@ -1,5 +1,8 @@
 # Built application files
 /build/
+release.properties
+release.keystore.jks
+app/app-release.apk
 
 # Local configuration file (sdk path, etc)
 local.properties
