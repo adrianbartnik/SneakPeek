@@ -11,11 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 
 import de.sneak.sneakpeek.R;
+import de.sneak.sneakpeek.ui.fragment.AboutDialogFragment;
 import de.sneak.sneakpeek.ui.fragment.MovieFragment;
 import de.sneak.sneakpeek.ui.fragment.PreviousMoviesFragment;
 import de.sneak.sneakpeek.ui.fragment.StudiosFragment;
@@ -87,7 +87,7 @@ public class SneakPeekActivity extends AppCompatActivity {
                 recreate();
                 return true;
             case R.id.main_menu_about:
-                Toast.makeText(this, "Ma", Toast.LENGTH_SHORT).show();
+                new AboutDialogFragment().show(getSupportFragmentManager(), AboutDialogFragment.TAG);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

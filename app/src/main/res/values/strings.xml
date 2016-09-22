@@ -13,4 +13,6 @@
     <string name="activity_main_released">Released</string>
     <string name="main_menu_about">About</string>
     <string name="main_menu_switch_theme">Switch theme</string>
+    <string name="dialog_about_github_logo">Github Logo</string>
+    <string name="dialog_about_text">App Icon made by\nhttp://www.flaticon.com/authors/catalin-fertu from flaticon.com\n\nSource code available at</string>
 </resources>
