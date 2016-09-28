@@ -42,7 +42,7 @@ public class StudiosFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                setMovies();
+                setMovies(true);
             }
         });
 
@@ -62,7 +62,7 @@ public class StudiosFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setMovies();
+        setMovies(false);
     }
 
     @Override
@@ -71,8 +71,8 @@ public class StudiosFragment extends Fragment {
         subscriptions.unsubscribe();
     }
 
-    public void setMovies() {
-        Subscription subscription = MovieRepository.getInstance().fetchStudios()
+    public void setMovies(boolean force) {
+        Subscription subscription = MovieRepository.getInstance().fetchStudios(force)
                 .subscribe(new Action1<List<Score11Movie>>() {
                     @Override
                     public void call(List<Score11Movie> movieRepository) {

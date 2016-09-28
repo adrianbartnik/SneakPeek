@@ -52,9 +52,9 @@ public class MovieRepository {
         return INSTANCE;
     }
 
-    public Observable<List<Score11Movie>> fetchStudios() {
+    public Observable<List<Score11Movie>> fetchStudios(boolean force) {
 
-        if (moviesWithStudios != null) {
+        if (!force && moviesWithStudios != null) {
             return Observable.just(moviesWithStudios);
         }
 
@@ -100,8 +100,8 @@ public class MovieRepository {
                 });
     }
 
-    public Observable<List<String>> fetchPreviousMovies() {
-        if (previousMovies != null) {
+    public Observable<List<String>> fetchPreviousMovies(boolean force) {
+        if (!force && previousMovies != null) {
             return Observable.just(previousMovies);
         }
 
@@ -141,9 +141,9 @@ public class MovieRepository {
                 });
     }
 
-    public Observable<List<String>> fetchMovies() {
+    public Observable<List<String>> fetchMovies(boolean force) {
 
-        if (moviePredictions != null) {
+        if (!force && moviePredictions != null) {
             return Observable.just(moviePredictions);
         }
 
@@ -186,9 +186,9 @@ public class MovieRepository {
                 });
     }
 
-    public Observable<Movie> fetchFullMovieInformation(final String title) {
+    public Observable<Movie> fetchFullMovieInformation(final String title, boolean force) {
 
-        if (movieInformation.containsKey(title)) {
+        if (!force && movieInformation.containsKey(title)) {
             return Observable.just(movieInformation.get(title));
         }
 

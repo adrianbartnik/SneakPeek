@@ -49,7 +49,7 @@ public class MovieFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                setMovies();
+                setMovies(true);
             }
         });
 
@@ -64,7 +64,7 @@ public class MovieFragment extends Fragment {
             public void onItemClicked(int position) {
                 final String title = moviesAdapter.getTitle(position);
 
-                Subscription subscription = MovieRepository.getInstance().fetchFullMovieInformation(title)
+                Subscription subscription = MovieRepository.getInstance().fetchFullMovieInformation(title, false)
                         .subscribe(new Action1<Movie>() {
                             @Override
                             public void call(Movie movie) {
@@ -95,7 +95,7 @@ public class MovieFragment extends Fragment {
     public void onResume() {
         super.onResume();
         subscriptions = new CompositeSubscription();
-        setMovies();
+        setMovies(false);
     }
 
     @Override
@@ -104,9 +104,9 @@ public class MovieFragment extends Fragment {
         subscriptions.unsubscribe();
     }
 
-    public void setMovies() {
+    public void setMovies(boolean force) {
 
-        Subscription subscription = MovieRepository.getInstance().fetchMovies().subscribe(new Action1<List<String>>() {
+        Subscription subscription = MovieRepository.getInstance().fetchMovies(force).subscribe(new Action1<List<String>>() {
             @Override
             public void call(List<String> movieRepository) {
                 moviesAdapter.addAll(movieRepository);

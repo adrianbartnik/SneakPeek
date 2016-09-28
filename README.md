@@ -7,4 +7,3 @@
 * Adding animations
 * Add possibility to show predictions for other cities and cinemas
 * Gridlayout
-* Force reload
