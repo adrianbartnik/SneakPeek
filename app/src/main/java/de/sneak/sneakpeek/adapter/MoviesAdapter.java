@@ -40,6 +40,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
+        holder.position.setText((position + 1 ) + ".");
         holder.title.setText(movieTitles.get(position));
     }
 
@@ -50,13 +51,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView title;
+        TextView title, position;
 
         private ClickListener clickListener;
 
-        public MovieViewHolder(View itemView, ClickListener clickListener) {
+        MovieViewHolder(View itemView, ClickListener clickListener) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.movie_list_item_title);
+            position = (TextView) itemView.findViewById(R.id.movie_list_item_position);
 
             this.clickListener = clickListener;
 

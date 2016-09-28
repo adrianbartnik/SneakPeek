@@ -20,6 +20,7 @@ import de.sneak.sneakpeek.adapter.MoviesAdapter;
 import de.sneak.sneakpeek.data.Movie;
 import de.sneak.sneakpeek.service.MovieRepository;
 import de.sneak.sneakpeek.ui.MovieActivity;
+import de.sneak.sneakpeek.util.DividerItemDecoration;
 import rx.Subscription;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -53,6 +54,10 @@ public class PreviousMoviesFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        RecyclerView.ItemDecoration itemDecoration = new
+                DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
+        recyclerView.addItemDecoration(itemDecoration);
 
         moviesAdapter = new MoviesAdapter(new ArrayList<String>(), new MoviesAdapter.MovieViewHolder.ClickListener() {
             @Override

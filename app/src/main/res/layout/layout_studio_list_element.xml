@@ -3,7 +3,9 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:padding="5dp">
+              android:paddingLeft="16dp"
+              android:paddingRight="16dp"
+    android:paddingBottom="4dp">
 
     <TextView
         android:id="@+id/studio_list_item_studio"

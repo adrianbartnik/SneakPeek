@@ -18,6 +18,7 @@ import de.sneak.sneakpeek.R;
 import de.sneak.sneakpeek.adapter.StudiosAdapter;
 import de.sneak.sneakpeek.data.Score11Movie;
 import de.sneak.sneakpeek.service.MovieRepository;
+import de.sneak.sneakpeek.util.DividerItemDecoration;
 import rx.Subscription;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -53,6 +54,10 @@ public class StudiosFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         studiosAdapter = new StudiosAdapter();
         recyclerView.setAdapter(studiosAdapter);
+
+        RecyclerView.ItemDecoration itemDecoration = new
+                DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
+        recyclerView.addItemDecoration(itemDecoration);
 
         subscriptions = new CompositeSubscription();
 
