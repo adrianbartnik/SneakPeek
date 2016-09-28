@@ -152,21 +152,19 @@ public class MovieRepository {
                 .flatMap(new Func1<ResponseBody, Observable<String>>() {
                     @Override
                     public Observable<String> call(ResponseBody responseBody) {
-                        String currentWeek;
-
                         try {
                             String response = responseBody.string();
 
                             Log.d(TAG, "Response: " + response);
-                            currentWeek = response.substring(0, response.indexOf(System.getProperty("line.separator")));
+                            String[] allPredictions = response.split(System.getProperty("line.separator"));
 
-                            String[] weekAndMovies = currentWeek.split("###");
+                            String[] weekAndMovies = allPredictions[allPredictions.length - 1].split("###"); // Gets current week
 
                             return Observable.from(Arrays.asList(Arrays.copyOfRange(weekAndMovies, 1, weekAndMovies.length)));
 
                         } catch (IOException exception) {
                             Log.e(TAG, "Failed to decode response", exception);
-                            return Observable.empty();
+                            return Observable.error(new Exception("Could not parse input from lebkuchenband.de/progno.txt"));
                         }
                     }
                 })
