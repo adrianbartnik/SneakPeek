@@ -38,6 +38,7 @@ public class AboutDialogFragment extends DialogFragment {
         });
 
         builder.setCancelable(true)
+                .setTitle("About")
                 .setView(layout);
 
         return builder.create();

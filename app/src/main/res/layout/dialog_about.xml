@@ -2,7 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="8dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp">
 
     <TextView
         android:id="@+id/dialog_about_text"
@@ -12,10 +15,11 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="@string/dialog_about_text"/>
+        android:text="@string/dialog_about_text"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <ImageView
-        android:id="@+id/dialog_about_github"   
+        android:id="@+id/dialog_about_github"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dialog_about_text"
@@ -23,5 +27,6 @@
         android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
         android:contentDescription="@string/dialog_about_github_logo"
-        android:src="@drawable/ic_github"/>
+        android:src="@drawable/ic_github"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 </RelativeLayout>
