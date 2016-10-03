@@ -16,4 +16,7 @@
     <string name="dialog_about_github_logo">Github Logo</string>
     <string name="dialog_about_text">App Icon made by\nhttp://www.flaticon.com/authors/catalin-fertu from flaticon.com\n\nSource code available at</string>
     <string name="movie_list_item_dummy_number">1.</string>
+
+    <string name="sync_account_type">sneakpeek.sneak.de</string>
+    <string name="content_authority">de.sneak.sneakpeek.provider</string>
 </resources>

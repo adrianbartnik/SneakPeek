@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import com.crashlytics.android.Crashlytics;
 
 import de.sneak.sneakpeek.R;
+import de.sneak.sneakpeek.sync.MovieSyncAdapter;
 import de.sneak.sneakpeek.ui.fragment.AboutDialogFragment;
 import de.sneak.sneakpeek.ui.fragment.MovieFragment;
 import de.sneak.sneakpeek.ui.fragment.PreviousMoviesFragment;
@@ -36,6 +37,8 @@ public class SneakPeekActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MovieSyncAdapter.initializeSyncAdapter(getApplication());
 
         Fabric.with(this, new Crashlytics());
 
