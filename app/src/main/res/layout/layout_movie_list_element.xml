@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:layout_gravity="center_vertical"
-
         android:text="@string/movie_list_item_dummy_number"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 

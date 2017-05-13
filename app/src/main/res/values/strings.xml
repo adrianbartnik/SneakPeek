@@ -19,4 +19,7 @@
 
     <string name="sync_account_type">sneakpeek.sneak.de</string>
     <string name="content_authority">de.sneak.sneakpeek.provider</string>
+    <string name="fragment_name_movies">Movies</string>
+    <string name="fragment_name_studios">Studios</string>
+    <string name="fragment_name_previous_movies">Previous Movies</string>
 </resources>
