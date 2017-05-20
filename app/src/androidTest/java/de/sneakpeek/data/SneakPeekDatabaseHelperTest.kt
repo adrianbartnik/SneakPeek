@@ -27,16 +27,16 @@ class SneakPeekDatabaseHelperTest {
     fun getTestProgno(): List<Prediction> {
         val predictions = ArrayList<Prediction>()
 
-        var movies = ArrayList<MoviePred>()
-        (0..3).mapTo(movies) { MoviePred("Title$it", it) }
+        var movies = ArrayList<MoviePrediction>()
+        (0..3).mapTo(movies) { MoviePrediction("Title$it", it) }
         predictions.add(Prediction("2017-01", movies))
 
-        movies = ArrayList<MoviePred>()
-        (0..4).mapTo(movies) { MoviePred("Title$it", it) }
+        movies = ArrayList<MoviePrediction>()
+        (0..4).mapTo(movies) { MoviePrediction("Title$it", it) }
         predictions.add(Prediction("2017-02", movies))
 
-        movies = ArrayList<MoviePred>()
-        (1..15).mapTo(movies) { MoviePred("New-Title$it", it) }
+        movies = ArrayList<MoviePrediction>()
+        (1..15).mapTo(movies) { MoviePrediction("New-Title$it", it) }
         predictions.add(Prediction("2017-03", movies))
 
         return predictions
