@@ -5,7 +5,6 @@ import de.sneakpeek.data.ActualMovie
 import de.sneakpeek.data.MoviePrediction
 import de.sneakpeek.data.PredictedStudios
 import de.sneakpeek.data.Prediction
-import java.util.*
 
 class BackendParser {
     fun parseActualMovies(response: String): List<ActualMovie> {
@@ -30,7 +29,7 @@ class BackendParser {
                 .map { it.trim() }
                 .filter { !it.isEmpty() }
                 .map { it.split("###") }
-                .map { PredictedStudios(it[0], it.subList(1, it.size)) }
+                .map { PredictedStudios(it[0], it.subList(1, it.size).map { it.substring(1) }) }
                 .toList()
     }
 

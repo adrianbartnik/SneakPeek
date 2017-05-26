@@ -3,10 +3,10 @@ package de.sneakpeek.service
 import android.content.Context
 import de.sneakpeek.data.*
 import de.sneakpeek.util.Util
-import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
-import java.util.*
+import io.reactivex.Maybe
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 class MovieRepository private constructor(context: Context) {
@@ -14,33 +14,71 @@ class MovieRepository private constructor(context: Context) {
     private val BACKEND_PARSER: BackendParser = BackendParser()
     private var database : SneakPeekDatabaseHelper = SneakPeekDatabaseHelper.GetInstance(context)
 
-    fun getActualMovies() : Observable<List<ActualMovie>> {
-        return predictionService.studios
+    private fun getActualMovies() : Observable<List<ActualMovie>> {
+
+        return predictionService.actualMovies
                 .subscribeOn(Schedulers.newThread())
-                .map { it.toString() }
+                .map { it.string() }
                 .map { return@map BACKEND_PARSER.parseActualMovies(it) }
-                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext { t: Throwable? -> Observable.empty() }
                 .doOnNext { database.insertActualMovies(it) }
     }
 
-    fun fetchStudios(): Observable<List<PredictedStudios>> {
+    fun getActual() : Maybe<List<ActualMovie>>{
+        return Observable
+                .concat(getActualMovies(), Observable.just(database.getActualMovies()))
+                .firstElement()
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    private fun fetchStudios(): Observable<List<PredictedStudios>> {
 
         return predictionService.studios
                 .subscribeOn(Schedulers.newThread())
-                .map { it.toString() }
+                .map { it.string() }
                 .map { return@map BACKEND_PARSER.parseStudios(it) }
-                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext { t: Throwable? -> Observable.empty() }
                 .doOnNext { database.insertStudios(it) }
     }
 
-    fun fetchMovies(): Observable<List<Prediction>> {
+    fun getStudios(): Maybe<List<StudioPredictions>>? {
 
-        return predictionService.studios
-                .subscribeOn(Schedulers.newThread())
-                .map { it.toString() }
-                .map { return@map BACKEND_PARSER.parsePrediction(it) }
+        val pairedStudios = fetchStudios()
+                .flatMap { Observable.fromIterable(it) }
+                .flatMap { (movieTitle, studios) -> Observable.fromIterable(studios).map { Pair(it, movieTitle) } }
+                .toList()
+                .blockingGet()
+
+        val groupedStudios = pairedStudios.groupBy { it.first }.map { StudioPredictions(it.key, it.value.map { it.second }) }
+
+        if (groupedStudios.isEmpty()) {
+            return Observable.just(database.getStudioPredictions())
+                    .firstElement()
+                    .observeOn(AndroidSchedulers.mainThread())
+        } else {
+            return Observable.just(groupedStudios)
+                    .firstElement()
+                    .observeOn(AndroidSchedulers.mainThread())
+        }
+    }
+
+    fun getMovies(): Maybe<Prediction> {
+        return Observable
+                .concat(fetchMovies(), Observable.just(database.getMoviePrediction()))
+                .firstElement()
                 .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    private fun fetchMovies(): Observable<Prediction> {
+
+        return predictionService.moviePredictions
+                .subscribeOn(Schedulers.newThread())
+                .map { it.string() }
+                .map { return@map BACKEND_PARSER.parsePrediction(it) }
+                .onErrorResumeNext { t: Throwable? -> Observable.empty() }
                 .doOnNext { database.insertMoviePredictions(it) }
+                .map { it.last() }
+                .observeOn(AndroidSchedulers.mainThread())
     }
 
     fun fetchFullMovieInformation(title: String): Observable<Movie> {

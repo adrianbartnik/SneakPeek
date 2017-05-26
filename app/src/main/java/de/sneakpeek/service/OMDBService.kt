@@ -1,9 +1,9 @@
 package de.sneakpeek.service
 
 import de.sneakpeek.data.Movie
+import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
-import rx.Observable
 
 interface OMDBService {
 

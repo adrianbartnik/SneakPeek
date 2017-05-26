@@ -1,19 +1,19 @@
 package de.sneakpeek.service
 
+import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.http.GET
-import rx.Observable
 
 interface PredictionService {
 
     @get:GET("progno.txt")
-    val predictions: Observable<ResponseBody>
+    val moviePredictions: Observable<ResponseBody>
 
     @get:GET("studios.txt")
     val studios: Observable<ResponseBody>
 
     @get:GET("actual.txt")
-    val previousMovies: Observable<ResponseBody>
+    val actualMovies: Observable<ResponseBody>
 
     companion object {
         val BASE_URL = "http://lebkuchenbande.de/"

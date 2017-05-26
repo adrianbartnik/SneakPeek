@@ -3,7 +3,7 @@ package de.sneakpeek.util
 import android.content.Context
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 object Util {
@@ -18,7 +18,7 @@ object Util {
     fun <T> createRetrofitService(clazz: Class<T>, endPoint: String): T {
         val restAdapter = Retrofit.Builder()
                 .baseUrl(endPoint)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
