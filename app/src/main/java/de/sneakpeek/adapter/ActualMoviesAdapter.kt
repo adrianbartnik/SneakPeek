@@ -1,24 +1,28 @@
 package de.sneakpeek.adapter
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import de.sneakpeek.R
+import de.sneakpeek.data.ActualMovie
 
 
-class PreviousMoviesAdapter(private val movieTitles: MutableList<String>, private val clickListener: PreviousMovieViewHolder.ClickListener) :
-        RecyclerView.Adapter<PreviousMoviesAdapter.PreviousMovieViewHolder>() {
+class ActualMoviesAdapter(
+        private val context: Context,
+        private var movieTitles: List<ActualMovie>,
+        private val clickListener: PreviousMovieViewHolder.ClickListener) :
+        RecyclerView.Adapter<ActualMoviesAdapter.PreviousMovieViewHolder>() {
 
-    fun addAll(movieTitles: List<String>) {
-        this.movieTitles.clear()
-        this.movieTitles.addAll(movieTitles)
+    fun addAll(movieTitles: List<ActualMovie>) {
+        this.movieTitles = movieTitles.reversed()
         notifyDataSetChanged()
     }
 
-    fun getTitle(position: Int): String {
-        return movieTitles.get(position)
+    fun getTitle(position: Int): ActualMovie {
+        return movieTitles[position]
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PreviousMovieViewHolder {
@@ -28,8 +32,10 @@ class PreviousMoviesAdapter(private val movieTitles: MutableList<String>, privat
     }
 
     override fun onBindViewHolder(holder: PreviousMovieViewHolder, position: Int) {
-        holder.date.text = "" + (position + 1) + "."
-        holder.title.text = movieTitles[position]
+        val movie = movieTitles[position]
+        val date = movie.formatWeek()
+        holder.date.text = context.getString(R.string.actual_week, date.week, date.year)
+        holder.title.text = movie.title
     }
 
     override fun getItemCount(): Int {
