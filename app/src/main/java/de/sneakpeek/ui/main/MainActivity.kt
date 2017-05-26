@@ -12,8 +12,8 @@ import android.view.Menu
 import android.view.MenuItem
 import com.crashlytics.android.Crashlytics
 import de.sneakpeek.R
-import de.sneakpeek.ui.main.fragment.MovieFragment
-import de.sneakpeek.ui.main.fragment.PreviousMoviesFragment
+import de.sneakpeek.ui.main.fragment.ActualMoviesFragment
+import de.sneakpeek.ui.main.fragment.MoviePredictionsFragment
 import de.sneakpeek.ui.main.fragment.StudiosFragment
 import de.sneakpeek.util.Util
 import io.fabric.sdk.android.Fabric
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         mPager = findViewById(R.id.activity_main_viewpager) as ViewPager
         mPager?.adapter = mPagerAdapter
-        mPager?.offscreenPageLimit = 1
+        mPager?.offscreenPageLimit = 2
 
         tabLayout.setupWithViewPager(mPager)
 
@@ -88,9 +88,9 @@ class MainActivity : AppCompatActivity() {
         override fun getItem(position: Int): Fragment {
 
             when (position) {
-                0 -> return MovieFragment.newInstance()
+                0 -> return MoviePredictionsFragment.newInstance()
                 1 -> return StudiosFragment.newInstance()
-                2 -> return PreviousMoviesFragment.newInstance()
+                2 -> return ActualMoviesFragment.newInstance()
                 else -> throw IllegalArgumentException()
             }
         }

@@ -15,62 +15,61 @@ import de.sneakpeek.R
 import de.sneakpeek.adapter.StudiosAdapter
 import de.sneakpeek.service.MovieRepository
 import de.sneakpeek.util.DividerItemDecoration
-import rx.subscriptions.CompositeSubscription
+import io.reactivex.disposables.CompositeDisposable
 
 class StudiosFragment : Fragment() {
 
-    private var subscriptions: CompositeSubscription? = null
+    private var subscriptions: CompositeDisposable? = null
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
     private var studiosAdapter: StudiosAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         swipeRefreshLayout = inflater!!.inflate(R.layout.fragment_studios, container, false) as SwipeRefreshLayout
 
-        swipeRefreshLayout?.setOnRefreshListener { setMovies(true) }
+        swipeRefreshLayout?.setOnRefreshListener { loadStudios() }
 
         val recyclerView = swipeRefreshLayout?.findViewById(R.id.fragment_studios_recycler_view) as RecyclerView
 
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        studiosAdapter = StudiosAdapter()
+        studiosAdapter = StudiosAdapter(emptyList())
         recyclerView.adapter = studiosAdapter
 
         val itemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST)
         recyclerView.addItemDecoration(itemDecoration)
 
-        subscriptions = CompositeSubscription()
+        subscriptions = CompositeDisposable()
 
         return swipeRefreshLayout
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setMovies(false)
+        loadStudios()
     }
 
     override fun onStop() {
         super.onStop()
-        subscriptions?.unsubscribe()
+        subscriptions?.dispose()
     }
 
-    fun setMovies(force: Boolean) {
-        val subscription = MovieRepository.getInstance().fetchStudios(force)
-                .subscribe({ movieRepository ->
-                    studiosAdapter!!.addAll(movieRepository)
-                    swipeRefreshLayout!!.isRefreshing = false
+    fun loadStudios() {
+        val subscription = MovieRepository.getInstance(context).getStudios()
+                ?.doOnEvent { _, _ -> swipeRefreshLayout?.isRefreshing = false }
+                ?.subscribe({
+                    studiosAdapter?.addAll(it)
                 }) { throwable ->
-                    swipeRefreshLayout!!.isRefreshing = false
                     Toast.makeText(context, "Failed to fetch movies", Toast.LENGTH_SHORT).show()
-                    Log.e(TAG, "Failed to fetch movie predictions", throwable)
+                    Log.e(TAG, "Failed to fetch movie moviePredictions", throwable)
                 }
 
-        subscriptions!!.add(subscription)
+        subscriptions?.add(subscription)
     }
 
     companion object {
 
-        private val TAG = MovieFragment::class.java.simpleName
+        private val TAG = MoviePredictionsFragment::class.java.simpleName
 
         fun newInstance(): StudiosFragment {
             return StudiosFragment()
