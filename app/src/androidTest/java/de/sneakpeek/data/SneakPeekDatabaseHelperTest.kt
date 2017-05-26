@@ -72,14 +72,14 @@ class SneakPeekDatabaseHelperTest {
     fun insertSameMovies() {
         databaseHelper?.insertMoviePredictions(getTestProgno())
 
-        var prediction = databaseHelper?.getPrediction("2017-01")
+        var prediction = databaseHelper?.getPredictionForWeek("2017-01")
 
         assertEquals(4, prediction?.size)
         for (i in 0..3) {
             assertEquals("Title$i", prediction?.get(i))
         }
 
-        prediction = databaseHelper?.getPrediction("2017-02")
+        prediction = databaseHelper?.getPredictionForWeek("2017-02")
 
         assertEquals(5, prediction?.size)
         for (i in 0..4) {
@@ -95,11 +95,11 @@ class SneakPeekDatabaseHelperTest {
     fun retrieveAcrossTwoPredictions() {
         databaseHelper?.insertMoviePredictions(getTestProgno())
 
-        var prediction = databaseHelper?.getPrediction("2017-01")
+        var prediction = databaseHelper?.getPredictionForWeek("2017-01")
 
         assertEquals(true, prediction?.contains("Title1"))
 
-        prediction = databaseHelper?.getPrediction("2017-02")
+        prediction = databaseHelper?.getPredictionForWeek("2017-02")
 
         assertEquals(true, prediction?.contains("Title1"))
     }
@@ -108,7 +108,7 @@ class SneakPeekDatabaseHelperTest {
     fun testInsertIdempotent() {
         databaseHelper?.insertMoviePredictions(getTestProgno())
 
-        var prediction = databaseHelper?.getPrediction("2017-01")
+        var prediction = databaseHelper?.getPredictionForWeek("2017-01")
         assertEquals(4, prediction?.size)
 
         var movies = databaseHelper?.getMovies()
@@ -116,11 +116,24 @@ class SneakPeekDatabaseHelperTest {
 
         databaseHelper?.insertMoviePredictions(getTestProgno())
 
-        prediction = databaseHelper?.getPrediction("2017-01")
+        prediction = databaseHelper?.getPredictionForWeek("2017-01")
         assertEquals(4, prediction?.size)
 
         movies = databaseHelper?.getMovies()
         assertEquals(20, movies?.size)
+    }
+
+    @Test
+    fun getPredictionForCurrentWeek() {
+        databaseHelper?.insertMoviePredictions(getTestProgno())
+
+        val prediction = databaseHelper?.getMoviePrediction()
+
+        assertEquals("2017-03", prediction?.week)
+
+        assertEquals(15, prediction?.movies?.size)
+
+        (1..15).forEach { assertEquals("New-Title$it", prediction?.movies?.get(it - 1)?.title) }
     }
 
     @Test

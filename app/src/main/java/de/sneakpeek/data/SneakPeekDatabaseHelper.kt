@@ -264,7 +264,7 @@ class SneakPeekDatabaseHelper private constructor(context: Context) : SQLiteOpen
         }
     }
 
-    fun getPrediction(week: String): List<String> {
+    fun getPredictionForWeek(week: String): List<String> {
         val db = readableDatabase
 
         val movies = ArrayList<String>()
@@ -284,6 +284,36 @@ class SneakPeekDatabaseHelper private constructor(context: Context) : SQLiteOpen
             }
 
             return movies
+        }
+    }
+
+    fun getMoviePrediction(): Prediction {
+        val db = readableDatabase
+
+        val movies = ArrayList<MoviePrediction>()
+
+        val query = "SELECT m.$KEY_MOVIE_TITLE, p.${KEY_WEEK}, p.${KEY_POSITION} FROM $TABLE_MOVIES m " +
+                "INNER JOIN $TABLE_MOVIE_PREDICTIONS p " +
+                "ON m.$KEY_MOVIE_ID=p.$KEY_MOVIE_ID " +
+                "WHERE p.$KEY_WEEK = (select max($KEY_WEEK) from $TABLE_MOVIE_PREDICTIONS) " +
+                "ORDER BY p.$KEY_POSITION asc"
+
+        db.rawQuery(query, null).use {
+            val columnIndexMovieTitle = it.getColumnIndex(KEY_MOVIE_TITLE)
+            val columnIndexMoviePosition = it.getColumnIndex(KEY_POSITION)
+            val columnIndexWeek = it.getColumnIndex(KEY_WEEK)
+
+            var week = ""
+
+            while (it.moveToNext()) {
+                val title = it.getString(columnIndexMovieTitle)
+                val position = it.getInt(columnIndexMoviePosition)
+                week = it.getString(columnIndexWeek)
+
+                movies.add(MoviePrediction(title, position))
+            }
+
+            return Prediction(week, movies = movies)
         }
     }
 

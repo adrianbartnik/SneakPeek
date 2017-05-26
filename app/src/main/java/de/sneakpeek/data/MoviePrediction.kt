@@ -1,14 +1,22 @@
 package de.sneakpeek.data
 
-data class MoviePrediction(val title: String, val studios: List<String>) {
-    constructor(title: String) : this(title, ArrayList<String>())
+data class Prediction(val week: String, val movies: List<MoviePrediction> = ArrayList<MoviePrediction>())
+
+data class MoviePrediction(val title: String, val position: kotlin.Int)
+
+data class ActualMovie(val title: String, val week: String) {
+    fun formatWeek() : MovieWeek {
+        val split = week.split("-")
+
+        if (split.size == 2) {
+            return MovieWeek(split[1], split[0])
+        } else {
+            return MovieWeek("InvalidFormat", "InvalidFormat")
+        }
+    }
 }
 
-data class Prediction(val week: String, val movies: List<MoviePred>)
-
-data class MoviePred(val title: String, val position: kotlin.Int)
-
-data class ActualMovie(val title: String, val week: String)
+data class MovieWeek(val week: String, val year: String)
 
 data class PredictedStudios(val movieTitle: String, val studios: List<String>)
 
