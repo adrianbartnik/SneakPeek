@@ -43,21 +43,28 @@ class ActualMoviesFragment : Fragment() {
             override fun onItemClicked(position: Int) {
                 val title = moviesAdapter?.getTitle(position)
 
-                Toast.makeText(context, "Clicked ${title}", Toast.LENGTH_LONG).show()
+                val subscription = MovieRepository.getInstance(context).fetchFullMovieInformation(title!!.title)
+                        .subscribe({ movie ->
+                            Log.e(TAG, "Received ${movie.credits}")
 
-//                val subscription = MovieRepository.instance.fetchFullMovieInformation(title, false)
-//                        .subscribe({ movie ->
+                            if (movie.credits.cast != null) {
+                                for (s in movie.credits.cast) {
+                                    Log.d(TAG, s.character + s.name)
+                                }
+                            }
+
+
 //                            if (movie.title == null) {
 //                                Toast.makeText(context, "Failed to retrieve information for " + title, Toast.LENGTH_SHORT).show()
 //                            } else {
-//                                startActivity(DetailActivity.StartMovieActivity(context, movie))
+////                                startActivity(DetailActivity.StartMovieActivity(context, movie))
 //                            }
-//                        }) { throwable ->
-//                            Toast.makeText(context, "Failed to fetch information for " + title, Toast.LENGTH_SHORT).show()
-//                            Log.e(TAG, "Failed to fetch information for " + title, throwable)
-//                        }
-//
-//                subscriptions?.add(subscription)
+                        }) { throwable ->
+                            Toast.makeText(context, "Failed to fetch information for " + title, Toast.LENGTH_SHORT).show()
+                            Log.e(TAG, "Failed to fetch information for $throwable", throwable)
+                        }
+
+                subscriptions?.add(subscription)
             }
         })
 

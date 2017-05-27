@@ -1,6 +1,7 @@
 package de.sneakpeek.service
 
 import android.content.Context
+import de.sneakpeek.BuildConfig
 import de.sneakpeek.data.*
 import de.sneakpeek.util.Util
 import io.reactivex.Maybe
@@ -81,13 +82,19 @@ class MovieRepository private constructor(context: Context) {
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun fetchFullMovieInformation(title: String): Observable<Movie> {
+    fun fetchFullMovieInformation(title: String): Maybe<MovieInfo> {
 
-        return omdbService.getMovie(title)
+        if (movieInformation.containsKey(title)) {
+            return Observable.just(movieInformation[title]!!).firstElement()
+        }
+
+        return movieService.queryMovie(BuildConfig.MOVIE_DB_API_KEY, title)
                 .timeout(10, TimeUnit.SECONDS)
+                .flatMap { movieService.getFullMovieInfo(it.results[0].id, BuildConfig.MOVIE_DB_API_KEY) }
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext { movie -> movieInformation.put(title, movie) }
+                .doOnNext { movieInformation.put(title, it) }
+                .firstElement()
     }
 
     companion object {
@@ -95,9 +102,9 @@ class MovieRepository private constructor(context: Context) {
         private var INSTANCE: MovieRepository? = null
 
         private val predictionService: PredictionService = Util.createRetrofitService(PredictionService::class.java, PredictionService.BASE_URL)
-        private val omdbService: OMDBService = Util.createRetrofitService(OMDBService::class.java, OMDBService.BASE_URL)
+        private val movieService: TheMovieDBService = Util.createRetrofitService(TheMovieDBService::class.java, TheMovieDBService.BASE_URL)
 
-        private val movieInformation = HashMap<String, Movie>()
+        private val movieInformation = HashMap<String, MovieInfo>()
 
         fun  getInstance(context: Context): MovieRepository {
             if (INSTANCE == null)

@@ -13,7 +13,7 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import de.sneakpeek.R
 
-import de.sneakpeek.data.Movie
+import de.sneakpeek.data.MovieInfo
 import de.sneakpeek.util.Util
 
 class DetailActivity : AppCompatActivity() {
@@ -36,42 +36,43 @@ class DetailActivity : AppCompatActivity() {
             return
         }
 
-        val movie = intent.extras.getParcelable<Movie>(MOVIE_KEY)
+        val movie = intent.extras.getParcelable<MovieInfo>(MOVIE_KEY)
 
         val poster = findViewById(R.id.activity_movie_poster) as ImageView
         Picasso.with(this@DetailActivity)
-                .load(movie?.poster)
-                .into(poster) // TODO Add placeholder
+//                .load(movie?.poster)
+//                .placeholder(R.id.movie_list_item_position)
+//                .into(poster)
 
         val director = findViewById(R.id.activity_main_director) as TextView
-        director.text = movie.director
+//        director.text = movie.director
 
         val actors = findViewById(R.id.activity_main_actors) as TextView
-        actors.text = movie.actors
+//        actors.text = movie.actors
 
         val country = findViewById(R.id.activity_main_country) as TextView
-        country.text = movie.country
+//        country.text = movie.
 
         val genre = findViewById(R.id.activity_main_genre) as TextView
-        genre.text = movie.genre
+        genre.text = movie.genres[0].name
 
         val imdb_rating = findViewById(R.id.activity_main_imdb_rating) as TextView
-        imdb_rating.text = movie.imdbRating
+        imdb_rating.text = movie.imdbId
 
         val metascore = findViewById(R.id.activity_main_metascore) as TextView
-        metascore.text = movie.metascore
+//        metascore.text = movie.sc
 
         val plot = findViewById(R.id.activity_main_plot) as TextView
-        plot.text = movie.plot
+        plot.text = movie.overview
 
         val released = findViewById(R.id.activity_main_released) as TextView
-        released.text = movie.released
+        released.text = movie.releaseDate
 
         val runtime = findViewById(R.id.activity_main_runtime) as TextView
-        runtime.text = movie.runtime
+        runtime.text = movie.runtime.toString()
 
         val writer = findViewById(R.id.activity_main_writer) as TextView
-        writer.text = movie.writer
+//        writer.text = movie.
 
         val collapsingToolbar = findViewById(R.id.activity_movie_collapsing_toolbar) as CollapsingToolbarLayout
         collapsingToolbar.title = movie.title
@@ -88,7 +89,7 @@ class DetailActivity : AppCompatActivity() {
 
         private val MOVIE_KEY = "MOVIE_KEY"
 
-        fun StartMovieActivity(context: Context, movie: Movie): Intent {
+        fun StartMovieActivity(context: Context, movie: MovieInfo): Intent {
             val intent = Intent(context, DetailActivity::class.java)
             intent.putExtra(MOVIE_KEY, movie)
             return intent

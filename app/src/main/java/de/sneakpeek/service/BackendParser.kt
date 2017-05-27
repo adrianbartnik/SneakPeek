@@ -1,6 +1,5 @@
 package de.sneakpeek.service
 
-import android.util.Log
 import de.sneakpeek.data.ActualMovie
 import de.sneakpeek.data.MoviePrediction
 import de.sneakpeek.data.PredictedStudios
@@ -8,8 +7,6 @@ import de.sneakpeek.data.Prediction
 
 class BackendParser {
     fun parseActualMovies(response: String): List<ActualMovie> {
-
-        Log.d(TAG, "Received response: $response")
 
         return response
                 .split(System.getProperty("line.separator"))
@@ -21,8 +18,6 @@ class BackendParser {
     }
 
     fun parseStudios(response: String): List<PredictedStudios> {
-
-        Log.d(TAG, "Received response: $response")
 
         return response
                 .split(System.getProperty("line.separator"))
@@ -36,8 +31,6 @@ class BackendParser {
     fun parsePrediction(response: String): List<Prediction> {
 
         val predictions = ArrayList<Prediction>(30)
-
-        Log.d(TAG, "Received response: $response")
 
         val allPredictions = response
                 .split(System.getProperty("line.separator"))
@@ -61,9 +54,5 @@ class BackendParser {
         }
 
         return predictions
-    }
-
-    companion object {
-        val TAG = BackendParser::class.simpleName
     }
 }

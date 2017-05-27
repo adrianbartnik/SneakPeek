@@ -48,19 +48,19 @@ class MoviePredictionsFragment : Fragment() {
 
                 Toast.makeText(context, title, Toast.LENGTH_LONG).show()
 
-//                val subscription = MovieRepository.instance.fetchFullMovieInformation(title, false)
-//                        .subscribe({ movie ->
-//                            if (movie.title == null) {
+                val subscription = MovieRepository.getInstance(context).fetchFullMovieInformation(title!!)
+                        .subscribe({ movie ->
+                            if (movie.title == null) {
 //                                Toast.makeText(context, "Failed to retrieve information for " + title, Toast.LENGTH_SHORT).show()
-//                            } else {
+                            } else {
 //                                startActivity(DetailActivity.StartMovieActivity(context, movie))
-//                            }
-//                        }) { throwable ->
-//                            Toast.makeText(context, "Failed to fetch information for " + title, Toast.LENGTH_SHORT).show()
-//                            Log.e(TAG, "Failed to fetch information for " + title, throwable)
-//                        }
-//
-//                subscriptions?.add(subscription)
+                            }
+                        }) { throwable ->
+                            Toast.makeText(context, "Failed to fetch information for " + title, Toast.LENGTH_SHORT).show()
+                            Log.e(TAG, "Failed to fetch information for " + title, throwable)
+                        }
+
+                subscriptions?.add(subscription)
             }
         })
 
