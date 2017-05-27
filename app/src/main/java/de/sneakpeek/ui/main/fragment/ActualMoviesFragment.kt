@@ -15,18 +15,20 @@ import de.sneakpeek.R
 import de.sneakpeek.adapter.ActualMoviesAdapter
 import de.sneakpeek.data.ActualMovie
 import de.sneakpeek.service.MovieRepository
+import de.sneakpeek.ui.detail.DetailActivity
 import de.sneakpeek.util.DividerItemDecoration
+import de.sneakpeek.util.inflate
 import io.reactivex.disposables.CompositeDisposable
 
 class ActualMoviesFragment : Fragment() {
 
-    private var subscriptions: CompositeDisposable? = null
+    private var subscriptions: CompositeDisposable = CompositeDisposable()
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
     private var moviesAdapter: ActualMoviesAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        swipeRefreshLayout = inflater?.inflate(R.layout.fragment_actual_movies, container, false) as SwipeRefreshLayout
+        swipeRefreshLayout = container?.inflate(R.layout.fragment_actual_movies) as SwipeRefreshLayout
         swipeRefreshLayout?.setOnRefreshListener { setPreviousMovies() }
 
         val recyclerView = swipeRefreshLayout?.findViewById(R.id.fragment_previous_movies_recycler_view) as RecyclerView
@@ -45,26 +47,19 @@ class ActualMoviesFragment : Fragment() {
 
                 val subscription = MovieRepository.getInstance(context).fetchFullMovieInformation(title!!.title)
                         .subscribe({ movie ->
-                            Log.e(TAG, "Received ${movie.credits}")
+                            Log.d(TAG, "Received ${movie.title}")
 
-                            if (movie.credits.cast != null) {
-                                for (s in movie.credits.cast) {
-                                    Log.d(TAG, s.character + s.name)
-                                }
+                            if (movie.title == null) {
+                                Toast.makeText(context, "Failed to retrieve information for " + title, Toast.LENGTH_SHORT).show()
+                            } else {
+                                startActivity(DetailActivity.StartMovieActivity(context, movie))
                             }
-
-
-//                            if (movie.title == null) {
-//                                Toast.makeText(context, "Failed to retrieve information for " + title, Toast.LENGTH_SHORT).show()
-//                            } else {
-////                                startActivity(DetailActivity.StartMovieActivity(context, movie))
-//                            }
                         }) { throwable ->
                             Toast.makeText(context, "Failed to fetch information for " + title, Toast.LENGTH_SHORT).show()
                             Log.e(TAG, "Failed to fetch information for $throwable", throwable)
                         }
 
-                subscriptions?.add(subscription)
+                subscriptions.add(subscription)
             }
         })
 
@@ -83,7 +78,7 @@ class ActualMoviesFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        subscriptions?.dispose()
+        subscriptions.dispose()
     }
 
     fun setPreviousMovies() {
@@ -97,7 +92,7 @@ class ActualMoviesFragment : Fragment() {
                     Log.e(TAG, "Failed to fetch movies", throwable)
                 }
 
-        subscriptions?.add(subscription)
+        subscriptions.add(subscription)
     }
 
     companion object {

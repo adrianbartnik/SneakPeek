@@ -21,7 +21,6 @@ import io.fabric.sdk.android.Fabric
 class MainActivity : AppCompatActivity() {
 
     private var mPagerAdapter: SneekPeekPagerAdapter? = null
-    private var mPager: ViewPager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -40,16 +39,16 @@ class MainActivity : AppCompatActivity() {
 
         mPagerAdapter = SneekPeekPagerAdapter(supportFragmentManager)
 
-        mPager = findViewById(R.id.activity_main_viewpager) as ViewPager
-        mPager?.adapter = mPagerAdapter
-        mPager?.offscreenPageLimit = 2
+        val mPager = findViewById(R.id.activity_main_viewpager) as ViewPager
+        mPager.adapter = mPagerAdapter
+        mPager.offscreenPageLimit = 2
 
         tabLayout.setupWithViewPager(mPager)
 
-        mPager?.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
+        mPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                mPager?.currentItem = tab.position
+                mPager.currentItem = tab.position
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {}
