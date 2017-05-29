@@ -1,13 +1,13 @@
 package de.sneakpeek.adapter
 
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import de.sneakpeek.R
 import de.sneakpeek.data.StudioPredictions
-import org.jsoup.helper.StringUtil
 
 class StudiosAdapter(private var studios: List<StudioPredictions>) : RecyclerView.Adapter<StudiosAdapter.MovieViewHolder>() {
 
@@ -25,7 +25,7 @@ class StudiosAdapter(private var studios: List<StudioPredictions>) : RecyclerVie
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val studioPrediction = studios[position]
         holder.studios.text = studioPrediction.studioTitle
-        holder.title.text = StringUtil.join(studioPrediction.movies, ", ")
+        holder.title.text = TextUtils.join(", ", studioPrediction.movies)
     }
 
     override fun getItemCount(): Int {

@@ -4,8 +4,7 @@ package de.sneakpeek.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.squareup.moshi.Json;
 
 public class MovieInfoGenre implements Parcelable {
 
@@ -24,8 +23,8 @@ public class MovieInfoGenre implements Parcelable {
 
     };
 
-    @SerializedName("id") @Expose public int id;
-    @SerializedName("name") @Expose public String name;
+    @Json(name = "id") public int id;
+    @Json(name = "name") public String name;
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(id);

@@ -2,9 +2,9 @@ package de.sneakpeek.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.squareup.moshi.Json;
 
 import java.util.List;
 
@@ -47,84 +47,32 @@ public class MovieInfo implements Parcelable {
         }
 
     };
-    @SerializedName("adult")
-    @Expose
-    public boolean adult;
-    @SerializedName("backdrop_path")
-    @Expose
-    public String backdropPath;
-    @SerializedName("belongs_to_collection")
-    @Expose
-    public Object belongsToCollection;
-    @SerializedName("budget")
-    @Expose
-    public int budget;
-    @SerializedName("genres")
-    @Expose
-    public List<MovieInfoGenre> genres = null;
-    @SerializedName("homepage")
-    @Expose
-    public String homepage;
-    @SerializedName("id")
-    @Expose
-    public int id;
-    @SerializedName("imdb_id")
-    @Expose
-    public String imdbId;
-    @SerializedName("original_language")
-    @Expose
-    public String originalLanguage;
-    @SerializedName("original_title")
-    @Expose
-    public String originalTitle;
-    @SerializedName("overview")
-    @Expose
-    public String overview;
-    @SerializedName("popularity")
-    @Expose
-    public double popularity;
-    @SerializedName("poster_path")
-    @Expose
-    public String posterPath;
-    @SerializedName("production_companies")
-    @Expose
-    public List<MovieInfoProductionCompany> productionCompanies = null;
-    @SerializedName("production_countries")
-    @Expose
-    public List<MovieInfoProductionCountry> productionCountries = null;
-    @SerializedName("release_date")
-    @Expose
-    public String releaseDate;
-    @SerializedName("revenue")
-    @Expose
-    public int revenue;
-    @SerializedName("runtime")
-    @Expose
-    public int runtime;
-    @SerializedName("spoken_languages")
-    @Expose
-    public List<MovieInfoSpokenLanguage> spokenLanguages = null;
-    @SerializedName("status")
-    @Expose
-    public String status;
-    @SerializedName("tagline")
-    @Expose
-    public String tagline;
-    @SerializedName("title")
-    @Expose
-    public String title;
-    @SerializedName("video")
-    @Expose
-    public boolean video;
-    @SerializedName("vote_average")
-    @Expose
-    public double voteAverage;
-    @SerializedName("vote_count")
-    @Expose
-    public int voteCount;
-    @SerializedName("credits")
-    @Expose
-    public MovieInfoCredits credits;
+    @Json(name = "adult") public boolean adult;
+    @Json(name = "backdrop_path") public String backdropPath;
+    @Json(name = "belongs_to_collection") public Object belongsToCollection;
+    @Json(name = "budget") public int budget;
+    @Json(name = "genres") public List<MovieInfoGenre> genres = null;
+    @Json(name = "homepage") public String homepage;
+    @Json(name = "id") public int id;
+    @Json(name = "imdb_id") public String imdbId;
+    @Json(name = "original_language") public String originalLanguage;
+    @Json(name = "original_title") public String originalTitle;
+    @Json(name = "overview") public String overview;
+    @Json(name = "popularity") public double popularity;
+    @Json(name = "poster_path") public String posterPath;
+    @Json(name = "production_companies") public List<MovieInfoProductionCompany> productionCompanies = null;
+    @Json(name = "production_countries") public List<MovieInfoProductionCountry> productionCountries = null;
+    @Json(name = "release_date") public String releaseDate;
+    @Json(name = "revenue") public int revenue;
+    @Json(name = "runtime") public int runtime;
+    @Json(name = "spoken_languages") public List<MovieInfoSpokenLanguage> spokenLanguages = null;
+    @Json(name = "status") public String status;
+    @Json(name = "tagline") public String tagline;
+    @Json(name = "title") public String title;
+    @Json(name = "video") public boolean video;
+    @Json(name = "vote_average") public double voteAverage;
+    @Json(name = "vote_count") public int voteCount;
+    @Json(name = "credits") public MovieInfoCredits credits;
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(adult);
@@ -156,5 +104,19 @@ public class MovieInfo implements Parcelable {
 
     public int describeContents() {
         return 0;
+    }
+
+    public
+    @Nullable
+    String getDirector() {
+        if (credits != null && credits.crew != null) {
+            for (MovieInfoCrew crew : credits.crew) {
+                if (crew.job.equalsIgnoreCase("director")) {
+                    return crew.name;
+                }
+            }
+        }
+
+        return null;
     }
 }

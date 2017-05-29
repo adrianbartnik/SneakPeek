@@ -21,7 +21,7 @@ class MovieRepository private constructor(context: Context) {
                 .subscribeOn(Schedulers.newThread())
                 .map { it.string() }
                 .map { return@map BACKEND_PARSER.parseActualMovies(it) }
-                .onErrorResumeNext { t: Throwable? -> Observable.empty() }
+                .onErrorResumeNext { _: Throwable? -> Observable.empty() }
                 .doOnNext { database.insertActualMovies(it) }
     }
 
@@ -38,7 +38,7 @@ class MovieRepository private constructor(context: Context) {
                 .subscribeOn(Schedulers.newThread())
                 .map { it.string() }
                 .map { return@map BACKEND_PARSER.parseStudios(it) }
-                .onErrorResumeNext { t: Throwable? -> Observable.empty() }
+                .onErrorResumeNext { _: Throwable? -> Observable.empty() }
                 .doOnNext { database.insertStudios(it) }
     }
 
@@ -76,7 +76,7 @@ class MovieRepository private constructor(context: Context) {
                 .subscribeOn(Schedulers.newThread())
                 .map { it.string() }
                 .map { return@map BACKEND_PARSER.parsePrediction(it) }
-                .onErrorResumeNext { t: Throwable? -> Observable.empty() }
+                .onErrorResumeNext { _: Throwable? -> Observable.empty() }
                 .doOnNext { database.insertMoviePredictions(it) }
                 .map { it.last() }
                 .observeOn(AndroidSchedulers.mainThread())

@@ -4,8 +4,7 @@ package de.sneakpeek.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.squareup.moshi.Json;
 
 import java.util.List;
 
@@ -37,48 +36,20 @@ public class MovieQueryResult implements Parcelable {
         }
 
     };
-    @SerializedName("poster_path")
-    @Expose
-    public String posterPath;
-    @SerializedName("adult")
-    @Expose
-    public boolean adult;
-    @SerializedName("overview")
-    @Expose
-    public String overview;
-    @SerializedName("release_date")
-    @Expose
-    public String releaseDate;
-    @SerializedName("genre_ids")
-    @Expose
-    public List<Integer> genreIds = null;
-    @SerializedName("id")
-    @Expose
-    public int id;
-    @SerializedName("original_title")
-    @Expose
-    public String originalTitle;
-    @SerializedName("original_language")
-    @Expose
-    public String originalLanguage;
-    @SerializedName("title")
-    @Expose
-    public String title;
-    @SerializedName("backdrop_path")
-    @Expose
-    public String backdropPath;
-    @SerializedName("popularity")
-    @Expose
-    public double popularity;
-    @SerializedName("vote_count")
-    @Expose
-    public int voteCount;
-    @SerializedName("video")
-    @Expose
-    public boolean video;
-    @SerializedName("vote_average")
-    @Expose
-    public double voteAverage;
+    @Json(name = "poster_path") public String posterPath;
+    @Json(name = "adult") public boolean adult;
+    @Json(name = "overview") public String overview;
+    @Json(name = "release_date") public String releaseDate;
+    @Json(name = "genre_ids") public List<Integer> genreIds = null;
+    @Json(name = "id") public int id;
+    @Json(name = "original_title") public String originalTitle;
+    @Json(name = "original_language") public String originalLanguage;
+    @Json(name = "title") public String title;
+    @Json(name = "backdrop_path") public String backdropPath;
+    @Json(name = "popularity") public double popularity;
+    @Json(name = "vote_count") public int voteCount;
+    @Json(name = "video") public boolean video;
+    @Json(name = "vote_average") public double voteAverage;
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(posterPath);

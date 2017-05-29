@@ -3,8 +3,7 @@ package de.sneakpeek.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.squareup.moshi.Json;
 
 import java.util.List;
 
@@ -26,18 +25,11 @@ public class MovieQuery implements Parcelable {
         }
 
     };
-    @SerializedName("page")
-    @Expose
-    public int page;
-    @SerializedName("results")
-    @Expose
-    public List<MovieQueryResult> results = null;
-    @SerializedName("total_results")
-    @Expose
-    public int totalResults;
-    @SerializedName("total_pages")
-    @Expose
-    public int totalPages;
+
+    @Json(name = "page") public int page;
+    @Json(name = "results") public List<MovieQueryResult> results = null;
+    @Json(name = "total_results") public int totalResults;
+    @Json(name = "total_pages") public int totalPages;
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(page);

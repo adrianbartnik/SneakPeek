@@ -4,8 +4,7 @@ package de.sneakpeek.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.squareup.moshi.Json;
 
 public class MovieInfoSpokenLanguage implements Parcelable {
 
@@ -24,12 +23,8 @@ public class MovieInfoSpokenLanguage implements Parcelable {
 
     };
 
-    @SerializedName("iso_639_1")
-    @Expose
-    public String iso6391;
-    @SerializedName("name")
-    @Expose
-    public String name;
+    @Json(name = "iso_639_1") public String iso6391;
+    @Json(name = "name") public String name;
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(iso6391);

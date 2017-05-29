@@ -45,7 +45,7 @@ class DetailActivity : AppCompatActivity() {
 //                .into(poster)
 
         val director = findViewById(R.id.activity_main_director) as TextView
-//        director.text = movie.director
+        director.text = movie.director
 
         val actors = findViewById(R.id.activity_main_actors) as TextView
 //        actors.text = movie.actors

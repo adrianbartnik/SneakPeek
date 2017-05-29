@@ -4,8 +4,7 @@ package de.sneakpeek.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.squareup.moshi.Json;
 
 import java.util.List;
 
@@ -16,6 +15,7 @@ public class MovieInfoCredits implements Parcelable {
         public MovieInfoCredits createFromParcel(Parcel in) {
             MovieInfoCredits instance = new MovieInfoCredits();
             in.readList(instance.cast, (MovieInfoCast.class.getClassLoader()));
+            in.readList(instance.crew, (MovieInfoCrew.class.getClassLoader()));
             return instance;
         }
 
@@ -25,12 +25,12 @@ public class MovieInfoCredits implements Parcelable {
 
     };
 
-    @SerializedName("cast")
-    @Expose
-    public List<MovieInfoCast> cast;
+    @Json(name = "cast") public List<MovieInfoCast> cast;
+    @Json(name = "crew") public List<MovieInfoCrew> crew;
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(cast);
+        dest.writeValue(crew);
     }
 
     public int describeContents() {
