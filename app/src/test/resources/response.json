@@ -1,0 +1,288 @@
+{
+  "adult": false,
+  "backdrop_path": "/ywLZ2SMqyE6pLWLfA2LI5pV4Fdx.jpg",
+  "belongs_to_collection": null,
+  "budget": 0,
+  "genres": [
+    {
+      "id": 18,
+      "name": "Drama"
+    },
+    {
+      "id": 10402,
+      "name": "Music"
+    }
+  ],
+  "homepage": "",
+  "id": 327528,
+  "imdb_id": "tt2133196",
+  "original_language": "en",
+  "original_title": "Born to Be Blue",
+  "overview": "Jazz legend Chet Baker finds love and redemption when he stars in a movie about his own troubled life to mount a comeback.",
+  "popularity": 0.41148,
+  "poster_path": "/iEdh2CkSyDXBTAPlNS6uLF9yTTH.jpg",
+  "production_companies": [
+    {
+      "name": "New Real Films",
+      "id": 2649
+    },
+    {
+      "name": "Lumanity Production",
+      "id": 8204
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "CA",
+      "name": "Canada"
+    },
+    {
+      "iso_3166_1": "GB",
+      "name": "United Kingdom"
+    }
+  ],
+  "release_date": "2015-09-13",
+  "revenue": 830129,
+  "runtime": 97,
+  "spoken_languages": [
+    {
+      "iso_639_1": "en",
+      "name": "English"
+    }
+  ],
+  "status": "Released",
+  "tagline": "Love is instramental",
+  "title": "Born to Be Blue",
+  "video": false,
+  "vote_average": 6.8,
+  "vote_count": 47,
+  "credits": {
+    "cast": [
+      {
+        "cast_id": 0,
+        "character": "Chet Baker",
+        "credit_id": "55c231a39251413dee00002a",
+        "id": 569,
+        "name": "Ethan Hawke",
+        "order": 0,
+        "profile_path": "/kcby6VYk6Gb0036nUyh8chY5ZAJ.jpg"
+      },
+      {
+        "cast_id": 1,
+        "character": "Jane/Elaine",
+        "credit_id": "55c231b6c3a36842e9000048",
+        "id": 37158,
+        "name": "Carmen Ejogo",
+        "order": 1,
+        "profile_path": "/yAiQAfxCAFw2SNIVpAePKXBvT58.jpg"
+      },
+      {
+        "cast_id": 2,
+        "character": "Dick",
+        "credit_id": "55c231c6c3a36842e5000034",
+        "id": 540,
+        "name": "Callum Keith Rennie",
+        "order": 2,
+        "profile_path": "/80DeOyHJPv44RUYW7tpEpINv7sX.jpg"
+      },
+      {
+        "cast_id": 3,
+        "character": "Dad",
+        "credit_id": "55c231de9251413de8000035",
+        "id": 230,
+        "name": "Stephen McHattie",
+        "order": 3,
+        "profile_path": "/iGkMgtmCQGc3Tbk1P7TS76j0PMP.jpg"
+      },
+      {
+        "cast_id": 4,
+        "character": "Mom",
+        "credit_id": "55c23202c3a36842e5000040",
+        "id": 70441,
+        "name": "Janet-Laine Green",
+        "order": 4,
+        "profile_path": "/yaY9XfagFurBIYRIzJj4YucYYLB.jpg"
+      },
+      {
+        "cast_id": 5,
+        "character": "Officer Reid",
+        "credit_id": "55c232129251413dde00003a",
+        "id": 76528,
+        "name": "Tony Nappo",
+        "order": 5,
+        "profile_path": "/uQeoiwDmT2dsmQMHWl5bcSYPOgi.jpg"
+      },
+      {
+        "cast_id": 21,
+        "character": "Florence",
+        "credit_id": "55e6d7b1c3a3685fa0002218",
+        "id": 180691,
+        "name": "Janine Theriault",
+        "order": 6,
+        "profile_path": "/3zErtz9qLwcXn99DABTDqecAMn6.jpg"
+      },
+      {
+        "cast_id": 6,
+        "character": "",
+        "credit_id": "55c2321bc3a36842e5000044",
+        "id": 535181,
+        "name": "Tony Nardi",
+        "order": 7,
+        "profile_path": "/emZyOni8b1sUGszgXwojpbNJmlQ.jpg"
+      },
+      {
+        "cast_id": 8,
+        "character": "Sarah",
+        "credit_id": "55c2324ac3a36842e9000057",
+        "id": 128150,
+        "name": "Katie Boland",
+        "order": 9,
+        "profile_path": "/8IN0gLwJn0spWyS44qBmPleFVfR.jpg"
+      },
+      {
+        "cast_id": 10,
+        "character": "Danny Friedman",
+        "credit_id": "55c232779251413de8000044",
+        "id": 180683,
+        "name": "Dan Lett",
+        "order": 10,
+        "profile_path": "/4MoFY6cXVuSyKljWdVevMzpiyhk.jpg"
+      },
+      {
+        "cast_id": 11,
+        "character": "Real Sophia",
+        "credit_id": "55c232909251413ddc000048",
+        "id": 1494008,
+        "name": "Sophia Walker",
+        "order": 11,
+        "profile_path": null
+      },
+      {
+        "cast_id": 12,
+        "character": "Actor Dick",
+        "credit_id": "55c232a29251413deb000046",
+        "id": 1330110,
+        "name": "Joe Condren",
+        "order": 12,
+        "profile_path": null
+      },
+      {
+        "cast_id": 13,
+        "character": "Dizzy Gillespie",
+        "credit_id": "55c232ba9251413deb00004a",
+        "id": 1260782,
+        "name": "Kevin Hanchard",
+        "order": 13,
+        "profile_path": "/fI4ohUgcQFUNBunvv75YtrkMuJi.jpg"
+      },
+      {
+        "cast_id": 14,
+        "character": "Beau",
+        "credit_id": "55c232c69251413de800004a",
+        "id": 559281,
+        "name": "Drew Davis",
+        "order": 14,
+        "profile_path": "/f7AGsRE3gJ5vwTQmUVhQBiiObUT.jpg"
+      },
+      {
+        "cast_id": 28,
+        "character": "Bowling Alley Dealer",
+        "credit_id": "56110f669251410615004c27",
+        "id": 1172366,
+        "name": "Charles Officer",
+        "order": 15,
+        "profile_path": "/jRXRuBRkhVaB0cvkIlDBX739oTT.jpg"
+      }
+    ],
+    "crew": [
+      {
+        "credit_id": "55c233149251413de5000056",
+        "department": "Directing",
+        "id": 69845,
+        "job": "Director",
+        "name": "Robert Budreau",
+        "profile_path": "/oEqGViKZIcUaCu4mXQc4NaxmLxm.jpg"
+      },
+      {
+        "credit_id": "55c23336c3a36842e3000044",
+        "department": "Writing",
+        "id": 69845,
+        "job": "Writer",
+        "name": "Robert Budreau",
+        "profile_path": "/oEqGViKZIcUaCu4mXQc4NaxmLxm.jpg"
+      },
+      {
+        "credit_id": "55c233509251413de500005c",
+        "department": "Editing",
+        "id": 27903,
+        "job": "Editor",
+        "name": "David Freeman",
+        "profile_path": null
+      },
+      {
+        "credit_id": "55f820389251410f3e002a5b",
+        "department": "Production",
+        "id": 1170534,
+        "job": "Producer",
+        "name": "Jake Seal",
+        "profile_path": null
+      },
+      {
+        "credit_id": "55c23a0dc3a36842dd000110",
+        "department": "Production",
+        "id": 69170,
+        "job": "Producer",
+        "name": "Jennifer Jonas",
+        "profile_path": null
+      },
+      {
+        "credit_id": "55c23a249251413df10000ee",
+        "department": "Art",
+        "id": 1018348,
+        "job": "Production Design",
+        "name": "Aidan Leroux",
+        "profile_path": null
+      },
+      {
+        "credit_id": "55f82014c3a3686d0700dbe4",
+        "department": "Camera",
+        "id": 4578,
+        "job": "Director of Photography",
+        "name": "Steve Cosens",
+        "profile_path": null
+      },
+      {
+        "credit_id": "55f8205592514103b6007c63",
+        "department": "Production",
+        "id": 69168,
+        "job": "Producer",
+        "name": "Leonard Farlinger",
+        "profile_path": "/t6DE7O0mie3f9qlyhZpiHgviVCb.jpg"
+      },
+      {
+        "credit_id": "55f8206792514103b6007c65",
+        "department": "Production",
+        "id": 69845,
+        "job": "Producer",
+        "name": "Robert Budreau",
+        "profile_path": "/oEqGViKZIcUaCu4mXQc4NaxmLxm.jpg"
+      },
+      {
+        "credit_id": "55f82105c3a3685c9c001de3",
+        "department": "Production",
+        "id": 14096,
+        "job": "Casting",
+        "name": "Nancy Klopper",
+        "profile_path": null
+      },
+      {
+        "credit_id": "55f82117c3a3680a0d00dc9f",
+        "department": "Costume & Make-Up",
+        "id": 1424454,
+        "job": "Costume Design",
+        "name": "Anne Dixon",
+        "profile_path": null
+      }
+    ]
+  }
+}
