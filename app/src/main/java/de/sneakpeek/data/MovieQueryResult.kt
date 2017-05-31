@@ -3,10 +3,8 @@ package de.sneakpeek.data
 
 import android.os.Parcel
 import android.os.Parcelable
-
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import de.sneakpeek.util.createParcel
 
 class MovieQueryResult(@Expose @SerializedName("poster_path") var posterPath: String,
                        @Expose @SerializedName("adult") var adult: Boolean = false,
@@ -22,7 +20,14 @@ class MovieQueryResult(@Expose @SerializedName("poster_path") var posterPath: St
                        @Expose @SerializedName("video") var video: Boolean = false,
                        @Expose @SerializedName("vote_average") var voteAverage: Double = 0.toDouble()) : Parcelable {
 
-    private constructor(source: Parcel) : this(
+    companion object {
+        @JvmField val CREATOR: Parcelable.Creator<MovieQueryResult> = object : Parcelable.Creator<MovieQueryResult> {
+            override fun createFromParcel(source: Parcel): MovieQueryResult = MovieQueryResult(source)
+            override fun newArray(size: Int): Array<MovieQueryResult?> = arrayOfNulls(size)
+        }
+    }
+
+    constructor(source: Parcel) : this(
             source.readString(),
             1 == source.readInt(),
             source.readString(),
@@ -38,28 +43,21 @@ class MovieQueryResult(@Expose @SerializedName("poster_path") var posterPath: St
             source.readDouble()
     )
 
+    override fun describeContents() = 0
+
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeValue(posterPath)
-        dest.writeValue(adult)
-        dest.writeValue(overview)
-        dest.writeValue(releaseDate)
-        dest.writeValue(id)
-        dest.writeValue(originalTitle)
-        dest.writeValue(originalLanguage)
-        dest.writeValue(title)
-        dest.writeValue(backdropPath)
-        dest.writeValue(popularity)
-        dest.writeValue(voteCount)
-        dest.writeValue(video)
-        dest.writeValue(voteAverage)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object {
-        @JvmField @Suppress("unused")
-        var CREATOR = createParcel { MovieQueryResult(it) }
+        dest.writeString(posterPath)
+        dest.writeInt((if (adult) 1 else 0))
+        dest.writeString(overview)
+        dest.writeString(releaseDate)
+        dest.writeInt(id)
+        dest.writeString(originalTitle)
+        dest.writeString(originalLanguage)
+        dest.writeString(title)
+        dest.writeString(backdropPath)
+        dest.writeDouble(popularity)
+        dest.writeInt(voteCount)
+        dest.writeInt((if (video) 1 else 0))
+        dest.writeDouble(voteAverage)
     }
 }

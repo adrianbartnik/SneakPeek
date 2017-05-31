@@ -1,11 +1,14 @@
 package de.sneakpeek.util
 
 import android.content.Context
+import com.google.gson.GsonBuilder
+import de.sneakpeek.BuildConfig
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 object Util {
 
@@ -14,20 +17,46 @@ object Util {
 
     fun <T> createRetrofitService(clazz: Class<T>, endPoint: String): T {
 
-        val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
-
         val httpClient = OkHttpClient.Builder()
-        httpClient.addInterceptor(logging)
+
+        val gson = GsonBuilder().serializeNulls().create()
 
         val restAdapter = Retrofit.Builder()
                 .baseUrl(endPoint)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(MoshiConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .addConverterFactory(GsonConverterFactory.create(gson))
+
+        addApiKey(httpClient)
+
+        if (BuildConfig.DEBUG) {
+            val logging = HttpLoggingInterceptor()
+            logging.level = HttpLoggingInterceptor.Level.BODY
+
+            httpClient.addInterceptor(logging)
+        }
+
+        return restAdapter
                 .client(httpClient.build())
                 .build()
+                .create(clazz)
+    }
 
-        return restAdapter.create(clazz)
+    fun addApiKey(httpClient: OkHttpClient.Builder) {
+
+        httpClient.addInterceptor { chain ->
+            val original = chain.request()
+            val originalHttpUrl = original.url()
+
+            val url = originalHttpUrl.newBuilder()
+                    .addQueryParameter("api_key", BuildConfig.MOVIE_DB_API_KEY)
+                    .build()
+
+            // Request customization: add request headers
+            val requestBuilder = original.newBuilder().url(url)
+
+            val request = requestBuilder.build()
+            chain.proceed(request)
+        }
     }
 
     fun SetUseDarkTheme(context: Context, useDark: Boolean) {

@@ -10,10 +10,10 @@ import retrofit2.http.Query
 interface TheMovieDBService {
 
     @GET("search/movie?language=en-US&page=1&include_adult=true") // TODO Language
-    fun queryMovie(@Query("api_key") apiKey: String, @Query("query") title: String): Observable<MovieQuery>
+    fun queryMovie(@Query("query") title: String): Observable<MovieQuery>
 
     @GET("movie/{id}?language=en-US&append_to_response=credits")
-    fun getFullMovieInfo(@Path("id") id: Int, @Query("api_key") apiKey: String): Observable<MovieInfo>
+    fun getFullMovieInfo(@Path("id") id: Int): Observable<MovieInfo>
 
     companion object {
         val BASE_URL = "https://api.themoviedb.org/3/"

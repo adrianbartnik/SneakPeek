@@ -1,7 +1,9 @@
 package de.sneakpeek.service
 
 import android.content.Context
-import de.sneakpeek.BuildConfig
+import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import de.sneakpeek.data.*
 import de.sneakpeek.util.Util
 import io.reactivex.Maybe
@@ -88,9 +90,10 @@ class MovieRepository private constructor(context: Context) {
             return Observable.just(movieInformation[title]!!).firstElement()
         }
 
-        return movieService.queryMovie(BuildConfig.MOVIE_DB_API_KEY, title)
+        return movieService.queryMovie(title)
                 .timeout(10, TimeUnit.SECONDS)
-                .flatMap { movieService.getFullMovieInfo(it.results[0].id, BuildConfig.MOVIE_DB_API_KEY) }
+                .filter { it.results != null }
+                .flatMap { movieService.getFullMovieInfo(it.results!![0].id)}
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext { movieInformation.put(title, it) }
