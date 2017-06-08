@@ -3,14 +3,17 @@ package de.sneakpeek.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import de.sneakpeek.R
+import de.sneakpeek.adapter.ActorsAdapter
 import de.sneakpeek.data.MovieInfo
 import de.sneakpeek.service.TheMovieDBService
 import de.sneakpeek.util.Util
@@ -51,9 +54,6 @@ class DetailActivity : AppCompatActivity() {
         val director = findViewById(R.id.activity_detail_director) as TextView
         director.text = movie.director
 
-        val actors = findViewById(R.id.activity_detail_actors) as TextView
-        actors.text = movie.credits?.cast?.map { it.name ?: "" }?.fold("") { acc, s -> "$acc\n$s" }
-
         val language = findViewById(R.id.activity_detail_original_language) as TextView
         language.text = Locale(movie.original_language).displayLanguage
 
@@ -79,8 +79,11 @@ class DetailActivity : AppCompatActivity() {
         val writer = findViewById(R.id.activity_detail_writer) as TextView
         writer.text = movie.writer
 
-        val collapsingToolbar = findViewById(R.id.activity_movie_collapsing_toolbar) as CollapsingToolbarLayout
-        collapsingToolbar.title = movie.title
+        val actorsRecyclerView = findViewById(R.id.activity_detail_recycler_view_actors) as RecyclerView
+        actorsRecyclerView.setHasFixedSize(true)
+        actorsRecyclerView.adapter = ActorsAdapter(movie.credits?.cast ?: emptyList())
+        actorsRecyclerView.itemAnimator = DefaultItemAnimator()
+        actorsRecyclerView.layoutManager = LinearLayoutManager(baseContext)
     }
 
     override fun onSupportNavigateUp(): Boolean {
