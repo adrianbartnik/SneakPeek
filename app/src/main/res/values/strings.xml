@@ -23,4 +23,5 @@
     <string name="fragment_name_studios">Studios</string>
     <string name="fragment_name_previous_movies">Previous Movies</string>
     <string name="actual_week">Week %1$s - %2$s</string>
+    <string name="activity_detail_budget_na">NA</string>
 </resources>

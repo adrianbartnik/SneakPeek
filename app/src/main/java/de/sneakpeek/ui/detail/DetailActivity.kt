@@ -17,6 +17,7 @@ import de.sneakpeek.adapter.ActorsAdapter
 import de.sneakpeek.data.MovieInfo
 import de.sneakpeek.service.TheMovieDBService
 import de.sneakpeek.util.Util
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -63,8 +64,14 @@ class DetailActivity : AppCompatActivity() {
         val vote_average = findViewById(R.id.activity_detail_vote_average) as TextView
         vote_average.text = "${movie.vote_average} / 10"
 
+        val numberFormatter = NumberFormat.getCurrencyInstance()
+        numberFormatter.minimumFractionDigits = 0
         val budget = findViewById(R.id.activity_detail_budget) as TextView
-        budget.text = movie.budget.toString()
+        budget.text = if (movie.budget == 0) {
+            getText(R.string.activity_detail_budget_na)
+        } else {
+            numberFormatter.format(movie.budget)
+        }
 
         val plot = findViewById(R.id.activity_detail_plot) as TextView
         plot.text = movie.overview
