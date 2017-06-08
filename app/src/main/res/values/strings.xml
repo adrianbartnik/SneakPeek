@@ -6,9 +6,9 @@
     <string name="activity_main_genre">Genre</string>
     <string name="activity_main_runtime">Runtime</string>
     <string name="activity_main_actors">Actors</string>
-    <string name="activity_main_country">Country</string>
-    <string name="activity_main_metascore">Metascore</string>
-    <string name="activity_main_imdb_rating">IMDB Rating</string>
+    <string name="activity_detail_original_language">Language</string>
+    <string name="activity_detail_budget">Budget</string>
+    <string name="activity_detail_vote_average">Votes</string>
     <string name="activity_main_writer">Writer</string>
     <string name="activity_main_released">Released</string>
     <string name="main_menu_about">About</string>

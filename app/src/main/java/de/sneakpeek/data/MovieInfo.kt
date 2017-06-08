@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName
 data class MovieInfo(@Expose @SerializedName("adult") var adult: Boolean = false,
                      @Expose @SerializedName("genres") var genres: List<MovieInfoGenre>?,
                      @Expose @SerializedName("id") var id: Int = 0,
+                     @Expose @SerializedName("budget") var budget: Int = 0,
                      @Expose @SerializedName("imdb_id") var imdb_id: String?,
                      @Expose @SerializedName("original_language") var original_language: String?,
                      @Expose @SerializedName("original_title") var original_title: String?,
@@ -31,6 +32,14 @@ data class MovieInfo(@Expose @SerializedName("adult") var adult: Boolean = false
                     ?: ""
         }
 
+    var writer: String = ""
+        get() {
+            return credits?.crew
+                    ?.firstOrNull { it.job.equals("writer", ignoreCase = true) }
+                    ?.name
+                    ?: ""
+        }
+
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<MovieInfo> = object : Parcelable.Creator<MovieInfo> {
             override fun createFromParcel(source: Parcel): MovieInfo = MovieInfo(source)
@@ -41,6 +50,7 @@ data class MovieInfo(@Expose @SerializedName("adult") var adult: Boolean = false
     constructor(source: Parcel) : this(
             1 == source.readInt(),
             source.createTypedArrayList(MovieInfoGenre.CREATOR),
+            source.readInt(),
             source.readInt(),
             source.readString(),
             source.readString(),
@@ -64,6 +74,7 @@ data class MovieInfo(@Expose @SerializedName("adult") var adult: Boolean = false
         dest.writeInt((if (adult) 1 else 0))
         dest.writeTypedList(genres)
         dest.writeInt(id)
+        dest.writeInt(budget)
         dest.writeString(imdb_id)
         dest.writeString(original_language)
         dest.writeString(original_title)

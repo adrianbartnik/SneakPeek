@@ -15,4 +15,10 @@
     <style name="SneakPeekDarkTransparentStatusBar" parent="SneakPeekDark" />
 
     <style name="SneakPeekLightTransparentStatusBar" parent="SneakPeekLight" />
+
+    <style name="SneakPeekDetailInfoText" parent="TextAppearance.AppCompat.Medium">
+        <!--<item name="android:fontFamily">sans-serif</item>-->
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#de000000</item>
+    </style>
 </resources>

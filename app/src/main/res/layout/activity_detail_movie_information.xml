@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <TextView
+        android:id="@+id/activity_detail_runtime"
+        style="@style/SneakPeekDetailInfoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="112 min"/>
+
+    <TextView
+        android:id="@+id/activity_detail_genre"
+        style="@style/SneakPeekDetailInfoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Action | Romance | Thriller"/>
+
+    <TextView
+        android:id="@+id/activity_detail_plot"
+        style="@style/SneakPeekDetailInfoText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_genre"
+        tools:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum."/>
+
+    <TextView
+        android:id="@+id/activity_detail_director"
+        style="@style/SneakPeekDetailInfoText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/activity_detail_vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_director_text"
+        tools:text="Blub"/>
+
+    <TextView
+        android:id="@+id/activity_detail_director_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/activity_main_director"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/activity_detail_vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_plot"/>
+
+    <TextView
+        android:id="@+id/activity_detail_writer_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/activity_main_writer"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_detail_vertical_guideline"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_plot"/>
+
+    <TextView
+        android:id="@+id/activity_detail_writer"
+        style="@style/SneakPeekDetailInfoText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:text="Fred Bred"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_detail_writer_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_writer_text"/>
+
+    <TextView
+        android:id="@+id/activity_detail_released"
+        style="@style/SneakPeekDetailInfoText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/activity_detail_vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_released_text"
+        tools:text="15.02.2932"/>
+
+    <TextView
+        android:id="@+id/activity_detail_released_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/activity_main_released"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/activity_detail_vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_director"/>
+
+    <TextView
+        android:id="@+id/activity_detail_original_language_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/activity_detail_original_language"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_detail_vertical_guideline"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_writer"/>
+
+    <TextView
+        android:id="@+id/activity_detail_original_language"
+        style="@style/SneakPeekDetailInfoText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_detail_original_language_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_original_language_text"
+        tools:text="Germany"/>
+
+    <TextView
+        android:id="@+id/activity_detail_vote_average"
+        style="@style/SneakPeekDetailInfoText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintLeft_toRightOf="@+id/activity_detail_vote_average_text"
+        app:layout_constraintTop_toTopOf="@+id/activity_detail_vote_average_text"
+        tools:text="92"/>
+
+    <TextView
+        android:id="@+id/activity_detail_vote_average_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/activity_detail_vote_average"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_released"/>
+
+    <TextView
+        android:id="@+id/activity_detail_budget"
+        style="@style/SneakPeekDetailInfoText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="0dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintLeft_toRightOf="@+id/activity_detail_budget_text"
+        app:layout_constraintTop_toTopOf="@+id/activity_detail_budget_text"
+        tools:text="87"/>
+
+    <TextView
+        android:id="@+id/activity_detail_budget_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/activity_detail_budget"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_detail_vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_original_language"/>
+
+    <TextView
+        android:id="@+id/activity_detail_actors_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/activity_main_actors"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_vote_average_text"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/activity_detail_vertical_guideline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintDimensionRatio=""
+        app:layout_constraintGuide_end="192dp"
+        tools:layout_editor_absoluteX="192dp"
+        tools:layout_editor_absoluteY="0dp"/>
+
+    <TextView
+        android:id="@+id/activity_detail_actors"
+        style="@style/SneakPeekDetailInfoText"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_actors_text"
+        tools:text="Pierce Brosnan, Halley Barry"/>
+
+</android.support.constraint.ConstraintLayout>

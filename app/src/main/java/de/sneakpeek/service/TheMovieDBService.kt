@@ -17,5 +17,6 @@ interface TheMovieDBService {
 
     companion object {
         val BASE_URL = "https://api.themoviedb.org/3/"
+        val IMAGE_URL = "http://image.tmdb.org/t/p/w342"
     }
 }
