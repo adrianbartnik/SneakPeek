@@ -8,11 +8,37 @@ import android.view.ViewGroup
 import android.widget.TextView
 import de.sneakpeek.R
 import de.sneakpeek.data.StudioPredictions
+import de.sneakpeek.view.FastScroll
+import java.text.Collator
+import java.util.*
+import kotlin.collections.HashMap
 
-class StudiosAdapter(private var studios: List<StudioPredictions>) : RecyclerView.Adapter<StudiosAdapter.MovieViewHolder>() {
+class StudiosAdapter(private var studios: List<StudioPredictions>) : FastScroll.FastScrollRecyclerViewInterface,
+        RecyclerView.Adapter<StudiosAdapter.MovieViewHolder>() {
+
+    private var mMapIndex: HashMap<Char, Int> = HashMap()
+
+    override fun getMapIndex(): HashMap<Char, Int> = mMapIndex
+
+    private fun calculateIndexesForName(items: List<String>): HashMap<Char, Int> {
+
+        val indexMap = LinkedHashMap<Char, Int>()
+
+        items.map { it[0] }.mapIndexed { index, character ->
+            if (!indexMap.containsKey(character)) {
+                indexMap.put(character, index)
+            } }
+
+        return indexMap
+    }
 
     fun addAll(studios: List<StudioPredictions>) {
-        this.studios = studios.sortedBy { it.studioTitle }
+
+        val collator = Collator.getInstance(Locale.GERMAN)
+        collator.strength = Collator.SECONDARY // a == A, a < Ä
+
+        this.studios = studios.sortedWith(kotlin.Comparator { studio1, studio2 -> collator.compare(studio1.studioTitle, studio2.studioTitle) })
+        this.mMapIndex = calculateIndexesForName(this.studios.map { it.studioTitle.capitalize() })
         notifyDataSetChanged()
     }
 

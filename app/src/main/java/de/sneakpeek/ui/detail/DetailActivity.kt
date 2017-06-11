@@ -91,6 +91,7 @@ class DetailActivity : AppCompatActivity() {
         actorsRecyclerView.adapter = ActorsAdapter(movie.credits?.cast ?: emptyList())
         actorsRecyclerView.itemAnimator = DefaultItemAnimator()
         actorsRecyclerView.layoutManager = LinearLayoutManager(baseContext)
+        actorsRecyclerView.isNestedScrollingEnabled = false
     }
 
     override fun onSupportNavigateUp(): Boolean {
