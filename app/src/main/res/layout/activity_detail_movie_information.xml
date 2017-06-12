@@ -25,7 +25,7 @@
     <TextView
         android:id="@+id/activity_detail_genre"
         style="@style/SneakPeekDetailInfoText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
@@ -33,7 +33,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Action | Romance | Thriller"/>
+        tools:text="Action | Romance | Thriller"
+        app:layout_constraintRight_toLeftOf="@+id/activity_detail_runtime"
+        android:layout_marginRight="8dp"/>
 
     <TextView
         android:id="@+id/activity_detail_plot"
