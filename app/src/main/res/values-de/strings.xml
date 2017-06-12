@@ -24,5 +24,5 @@
     <string name="actual_week">Woche %1$s - %2$s</string>
     <string name="activity_detail_budget_na">NA</string>
     <string name="dialog_about_title">Über</string>
-    <string name="dialog_about_text">Version %1$s\n\nMIT Lizens 2017</string>
+    <string name="dialog_about_text">SneakPeek zeigt die Filmvorhersage für die Sneakpreview für das Cineplex am Potsdamer Platzshows, die Liste der dazugehörigen Studios sowie tatsächlich gelaufenen Filme der jüngsten Vergangenheit.\n\nVersion %1$s</string>
 </resources>
