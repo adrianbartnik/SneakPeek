@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SneakPeek</string>
+
+    <string name="movie_poster_image_description">Filmposter</string>
+    <string name="activity_main_plot">Plot</string>
+    <string name="activity_main_director">Direktor</string>
+    <string name="activity_main_genre">Genre</string>
+    <string name="activity_main_runtime">Länge</string>
+    <string name="activity_main_actors">Schauspieler</string>
+    <string name="activity_detail_original_language">Sprache</string>
+    <string name="activity_detail_budget">Budget</string>
+    <string name="activity_detail_vote_average">Wertung</string>
+    <string name="activity_main_writer">Autor</string>
+    <string name="activity_main_released">Veröffentlicht</string>
+    <string name="main_menu_about">Über</string>
+    <string name="main_menu_switch_theme">Farbschema wechseln</string>
+    <string name="dialog_about_github_logo">Github Logo</string>
+    <string name="movie_list_item_dummy_number">1.</string>
+
+    <string name="fragment_name_movies">Filme</string>
+    <string name="fragment_name_studios">Studios</string>
+    <string name="fragment_name_previous_movies">Vergangene Filme</string>
+    <string name="actual_week">Woche %1$s - %2$s</string>
+    <string name="activity_detail_budget_na">NA</string>
+    <string name="dialog_about_title">Über</string>
+    <string name="dialog_about_text">Version %1$s\n\nMIT Lizens 2017</string>
+</resources>
