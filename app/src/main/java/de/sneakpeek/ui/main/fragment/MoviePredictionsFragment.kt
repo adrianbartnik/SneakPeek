@@ -70,8 +70,8 @@ class MoviePredictionsFragment : Fragment() {
         return swipeRefreshLayout
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         subscriptions = CompositeDisposable()
         setMovies()
     }

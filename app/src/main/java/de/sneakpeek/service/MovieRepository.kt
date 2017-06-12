@@ -1,9 +1,6 @@
 package de.sneakpeek.service
 
 import android.content.Context
-import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import de.sneakpeek.data.*
 import de.sneakpeek.util.Util
 import io.reactivex.Maybe
@@ -30,6 +27,7 @@ class MovieRepository private constructor(context: Context) {
     fun getActual() : Maybe<List<ActualMovie>>{
         return Observable
                 .concat(getActualMovies(), Observable.just(database.getActualMovies()))
+                .subscribeOn(Schedulers.newThread())
                 .firstElement()
                 .observeOn(AndroidSchedulers.mainThread())
     }
@@ -56,10 +54,12 @@ class MovieRepository private constructor(context: Context) {
 
         if (groupedStudios.isEmpty()) {
             return Observable.just(database.getStudioPredictions())
+                    .subscribeOn(Schedulers.newThread())
                     .firstElement()
                     .observeOn(AndroidSchedulers.mainThread())
         } else {
             return Observable.just(groupedStudios)
+                    .subscribeOn(Schedulers.newThread())
                     .firstElement()
                     .observeOn(AndroidSchedulers.mainThread())
         }

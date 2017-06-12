@@ -35,8 +35,8 @@ class StudiosFragment : Fragment() {
         return recyclerView
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         subscriptions = CompositeDisposable()
         loadStudios()
     }
