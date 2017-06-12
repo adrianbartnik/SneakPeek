@@ -14,7 +14,6 @@
     <string name="main_menu_about">About</string>
     <string name="main_menu_switch_theme">Switch theme</string>
     <string name="dialog_about_github_logo">Github Logo</string>
-    <string name="dialog_about_text">App Icon made by\nhttp://www.flaticon.com/authors/catalin-fertu from flaticon.com\n\nSource code available at</string>
     <string name="movie_list_item_dummy_number">1.</string>
 
     <string name="sync_account_type">sneakpeek.sneak.de</string>
@@ -24,4 +23,6 @@
     <string name="fragment_name_previous_movies">Previous Movies</string>
     <string name="actual_week">Week %1$s - %2$s</string>
     <string name="activity_detail_budget_na">NA</string>
+    <string name="dialog_about_title">About</string>
+    <string name="dialog_about_text">Version %1$s\n\nMIT License 2017</string>
 </resources>
