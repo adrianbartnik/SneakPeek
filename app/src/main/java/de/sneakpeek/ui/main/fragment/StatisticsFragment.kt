@@ -3,7 +3,6 @@ package de.sneakpeek.ui.main.fragment
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IValueFormatter
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import de.sneakpeek.R
 import de.sneakpeek.data.SneakPeekDatabaseHelper
 import de.sneakpeek.util.inflate
@@ -43,13 +43,25 @@ class StatisticsFragment : Fragment() {
 
         val entries = stats.map { it.toFloat() / sampleSize }.mapIndexed { index, i -> Entry(index.toFloat(), i) }
 
-        val dataSet = LineDataSet(entries, "Probability of n-th prediction is correct");
+        val dataSet = LineDataSet(entries, getString(R.string.statistic_fragment_distribution_description));
         dataSet.valueFormatter = IValueFormatter { value, _, _, _ -> String.format("%.1f%%", value * 100) }
         dataSet.color = ContextCompat.getColor(context, R.color.accent)
 
-        lineChart?.let {
-            Log.d("Stats", "Size: " + entries.size + " " + stats + " " + stats.size)
+        var sum = 0
+        val accumulated = IntArray(entries.size)
+        for (i in 0..entries.lastIndex) {
+            sum += stats[i]
+            accumulated[i] = sum
+        }
 
+        val cumulativeDistribution = accumulated.map { it.toFloat() / sampleSize }.mapIndexed { index, i -> Entry(index.toFloat(), i) }
+
+        val dataSetCumulative = LineDataSet(cumulativeDistribution, getString(R.string.statistic_fragment_cumulative_distribution_description))
+        dataSetCumulative.valueFormatter = IValueFormatter { value, _, _, _ -> String.format("%.1f%%", value * 100) }
+        dataSetCumulative.color = ContextCompat.getColor(context, R.color.primary)
+        dataSetCumulative.setCircleColor(ContextCompat.getColor(context, R.color.primary))
+
+        lineChart?.let {
             it.xAxis?.position = XAxis.XAxisPosition.BOTTOM
             it.xAxis?.isGranularityEnabled = true
             it.xAxis?.granularity = 1f
@@ -58,11 +70,18 @@ class StatisticsFragment : Fragment() {
             it.xAxis?.labelCount = 10
 
             it.legend?.isEnabled = true
+            it.legend?.isWordWrapEnabled = true
+            it.legend?.textSize = 14f
 
-            val lineData = LineData(dataSet)
+            val dataSets = ArrayList<ILineDataSet>()
+            dataSets.add(dataSet)
+            dataSets.add(dataSetCumulative)
 
-            it.data = lineData
+            it.data = LineData(dataSets)
             it.description?.isEnabled = true
+            it.description?.text = "Dataset size: $sampleSize"
+            it.description?.textSize = 14f
+
             it.invalidate()
         }
     }
@@ -84,17 +103,12 @@ class StatisticsFragment : Fragment() {
             val prediction = predictions[i]
             val movie = actualMovies[i]
 
-            Log.d("Stats", "Sizes: " + actualMovies.size + " " + prediction.movies.size + " " + prediction.movies)
-
             var indexOfCorrectPrediction = prediction.movies.find { it.title == movie.title }?.position ?: -1
 
             indexOfCorrectPrediction -= 1
 
             if (indexOfCorrectPrediction != -2) {
-                Log.d("Stats", "Correct prediction: $indexOfCorrectPrediction $movie")
                 correctPrediction[indexOfCorrectPrediction] += 1
-            } else {
-                Log.d("Stats", "Not identified: $indexOfCorrectPrediction $movie $prediction")
             }
         }
 
@@ -102,8 +116,6 @@ class StatisticsFragment : Fragment() {
     }
 
     companion object {
-
-        private val TAG = StatisticsFragment::class.java.simpleName
 
         fun newInstance(): StatisticsFragment {
             return StatisticsFragment()

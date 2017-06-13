@@ -27,4 +27,6 @@
     <string name="dialog_about_text">SneakPeek shows the movie predictions for the upcoming sneak preview at Cineplex Potsdamer Platz, the list of studios for the corresponding movies and the previously shown movies.\n\nVersion %1$s\n\n</string>
     <string name="banana_image">Banana image</string>
     <string name="fragment_name_statistics">Statistics</string>
+    <string name="statistic_fragment_cumulative_distribution_description">Probability of up until n-th prediction is correct</string>
+    <string name="statistic_fragment_distribution_description">Probability of n-th prediction is correct</string>
 </resources>
