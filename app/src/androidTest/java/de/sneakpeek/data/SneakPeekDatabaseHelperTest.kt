@@ -4,6 +4,7 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -196,5 +197,18 @@ class SneakPeekDatabaseHelperTest {
         assertEquals(21, prediction?.size)
 
         (0..20).forEach { assertEquals(ActualMovie("Title$it", "Week-$it"), prediction?.get(it)) }
+    }
+
+    @Test
+    fun getMoviePredictions() {
+        databaseHelper?.insertMoviePredictions(getTestProgno())
+
+        val moviePredictions = databaseHelper?.getMoviePredictions()
+
+        assertEquals(3, moviePredictions?.size)
+
+        (0..3).forEach { assertTrue(moviePredictions?.get(2)?.movies?.contains(MoviePrediction("Title$it", it)) ?: false) }
+        (0..4).forEach { assertTrue(moviePredictions?.get(1)?.movies?.contains(MoviePrediction("Title$it", it)) ?: false) }
+        (1..15).forEach { assertTrue(moviePredictions?.get(0)?.movies?.contains(MoviePrediction("New-Title$it", it)) ?: false) }
     }
 }

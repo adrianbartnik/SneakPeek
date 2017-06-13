@@ -317,6 +317,38 @@ class SneakPeekDatabaseHelper private constructor(context: Context) : SQLiteOpen
         }
     }
 
+    fun getMoviePredictions(): List<Prediction> {
+        val db = readableDatabase
+
+        val movies = ArrayList<MoviePrediction>()
+
+        val query = "SELECT m.$KEY_MOVIE_TITLE, p.$KEY_WEEK, p.$KEY_POSITION FROM $TABLE_MOVIES m " +
+                "INNER JOIN $TABLE_MOVIE_PREDICTIONS p " +
+                "ON m.$KEY_MOVIE_ID=p.$KEY_MOVIE_ID " +
+                "ORDER BY p.$KEY_WEEK desc"
+
+        db.rawQuery(query, null).use {
+            val columnIndexMovieTitle = it.getColumnIndex(KEY_MOVIE_TITLE)
+            val columnIndexMoviePosition = it.getColumnIndex(KEY_POSITION)
+            val columnIndexWeek = it.getColumnIndex(KEY_WEEK)
+
+            val triples = ArrayList<Triple<String, Int, String>>()
+
+            while (it.moveToNext()) {
+                val title = it.getString(columnIndexMovieTitle)
+                val position = it.getInt(columnIndexMoviePosition)
+                val week = it.getString(columnIndexWeek)
+
+                triples.add(Triple(title, position, week))
+            }
+
+            // Group by week and then map list elements to MoviePrediction
+            val moviePredictions = triples.groupBy { it.third }.map { Prediction(it.key, it.value.map { MoviePrediction(it.first, it.second) }) }
+
+            return moviePredictions
+        }
+    }
+
     fun getStudioPredictions(): List<StudioPredictions> {
         val db = readableDatabase
 
