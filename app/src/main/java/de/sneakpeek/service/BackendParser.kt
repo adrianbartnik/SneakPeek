@@ -47,8 +47,8 @@ class BackendParser {
 
             val movies = movieWithStudiosSplit
                     .subList(1, movieWithStudiosSplit.size)
-                    .map { it.split("-") }
-                    .map { MoviePrediction(it.get(1), it[0].toInt()) }
+                    .map { it.split("-", limit = 2) }
+                    .map { MoviePrediction(it[1], it[0].toInt()) }
 
             predictions.add(Prediction(week, movies = movies))
         }
