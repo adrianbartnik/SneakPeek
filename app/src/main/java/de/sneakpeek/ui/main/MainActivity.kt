@@ -14,6 +14,7 @@ import com.crashlytics.android.Crashlytics
 import de.sneakpeek.R
 import de.sneakpeek.ui.main.fragment.ActualMoviesFragment
 import de.sneakpeek.ui.main.fragment.MoviePredictionsFragment
+import de.sneakpeek.ui.main.fragment.StatisticsFragment
 import de.sneakpeek.ui.main.fragment.StudiosFragment
 import de.sneakpeek.util.Util
 import io.fabric.sdk.android.Fabric
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         val mPager = findViewById(R.id.activity_main_viewpager) as ViewPager
         mPager.adapter = mPagerAdapter
-        mPager.offscreenPageLimit = 2
+        mPager.offscreenPageLimit = 3
 
         tabLayout.setupWithViewPager(mPager)
 
@@ -81,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     private inner class SneekPeekPagerAdapter internal constructor(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         override fun getCount(): Int {
-            return 3
+            return 4
         }
 
         override fun getItem(position: Int): Fragment {
@@ -90,6 +91,7 @@ class MainActivity : AppCompatActivity() {
                 0 -> return MoviePredictionsFragment.newInstance()
                 1 -> return StudiosFragment.newInstance()
                 2 -> return ActualMoviesFragment.newInstance()
+                3 -> return StatisticsFragment.newInstance()
                 else -> throw IllegalArgumentException()
             }
         }
@@ -99,6 +101,7 @@ class MainActivity : AppCompatActivity() {
                 0 -> return getString(R.string.fragment_name_movies)
                 1 -> return getString(R.string.fragment_name_studios)
                 2 -> return getString(R.string.fragment_name_previous_movies)
+                3 -> return getString(R.string.fragment_name_statistics)
                 else -> throw IllegalArgumentException()
             }
         }
