@@ -31,7 +31,7 @@ public class FastScroll extends RecyclerView {
     public float sy;
     public Character section;
     public boolean showLetter = false;
-    private boolean setupThings = false;
+    private boolean setupComplete = false;
 
     public FastScroll(Context context) {
         super(context);
@@ -47,9 +47,13 @@ public class FastScroll extends RecyclerView {
 
     @Override
     public void onDraw(Canvas c) {
-        if (!setupThings)
+        if (!setupComplete)
             setupThings();
         super.onDraw(c);
+    }
+
+    public void forceReSetup() {
+        setupComplete = false;
     }
 
     private void setupThings() {
@@ -85,7 +89,7 @@ public class FastScroll extends RecyclerView {
 
         sx = this.getWidth() - this.getPaddingRight() - (float) (1.2 * scaledWidth);
         sy = (float) ((this.getHeight() - (scaledHeight * sections.length)) / 2.0);
-        setupThings = true;
+        setupComplete = true;
     }
 
     @Override

@@ -21,18 +21,21 @@ class StudiosFragment : Fragment() {
 
     private var subscriptions: CompositeDisposable = CompositeDisposable()
     private val studiosAdapter: StudiosAdapter by lazy { StudiosAdapter(emptyList()) }
+    var fastScroll: FastScroll? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val recyclerView = container?.inflate(R.layout.fragment_studios) as FastScroll
+        fastScroll = container?.inflate(R.layout.fragment_studios) as FastScroll
 
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = studiosAdapter
+        fastScroll?.let {
+            it.setHasFixedSize(true)
+            it.layoutManager = LinearLayoutManager(context)
+            it.adapter = studiosAdapter
 
-        recyclerView.addItemDecoration(FastScrollItemDecorator(context))
-        recyclerView.itemAnimator = DefaultItemAnimator()
+            it.addItemDecoration(FastScrollItemDecorator(context))
+            it.itemAnimator = DefaultItemAnimator()
+        }
 
-        return recyclerView
+        return fastScroll
     }
 
     override fun onStart() {
@@ -47,9 +50,10 @@ class StudiosFragment : Fragment() {
     }
 
     fun loadStudios() {
-        val subscription = MovieRepository.getInstance(context).getStudios()
+        val subscription = MovieRepository(context).getStudios()
                 ?.subscribe({
                     studiosAdapter.addAll(it)
+                    fastScroll?.forceReSetup()
                 }) { throwable ->
                     Toast.makeText(context, "Failed to fetch movies", Toast.LENGTH_SHORT).show()
                     Log.e(TAG, "Failed to fetch movie moviePredictions", throwable)
@@ -60,7 +64,7 @@ class StudiosFragment : Fragment() {
 
     companion object {
 
-        private val TAG = MoviePredictionsFragment::class.java.simpleName
+        private val TAG = StudiosFragment::class.java.simpleName
 
         fun newInstance(): StudiosFragment {
             return StudiosFragment()

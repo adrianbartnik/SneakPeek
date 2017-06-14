@@ -45,10 +45,8 @@ class ActualMoviesFragment : Fragment() {
             override fun onItemClicked(position: Int) {
                 val title = moviesAdapter?.getTitle(position)
 
-                val subscription = MovieRepository.getInstance(context).fetchFullMovieInformation(title!!.title)
+                val subscription = MovieRepository(context).fetchFullMovieInformation(title!!.title)
                         .subscribe({ movie ->
-                            Log.d(TAG, "Received ${movie.title}")
-
                             if (movie.title == null) {
                                 Toast.makeText(context, "Failed to retrieve information for " + title, Toast.LENGTH_SHORT).show()
                             } else {
@@ -83,7 +81,7 @@ class ActualMoviesFragment : Fragment() {
 
     fun setPreviousMovies() {
 
-        val subscription = MovieRepository.getInstance(context).getActual()
+        val subscription = MovieRepository(context).getActual()
                 .doOnEvent { _, _ -> swipeRefreshLayout?.isRefreshing = false }
                 .subscribe({ movieRepository ->
                     moviesAdapter?.addAll(movieRepository)

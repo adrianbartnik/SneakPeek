@@ -5,29 +5,30 @@ import de.sneakpeek.data.*
 import de.sneakpeek.util.Util
 import io.reactivex.Maybe
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.internal.operators.single.SingleFromUnsafeSource
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class MovieRepository private constructor(context: Context) {
+class MovieRepository constructor(context: Context) {
 
-    private val BACKEND_PARSER: BackendParser = BackendParser()
-    private var database : SneakPeekDatabaseHelper = SneakPeekDatabaseHelper.GetInstance(context)
+    private val database: SneakPeekDatabaseHelper by lazy { SneakPeekDatabaseHelper.GetInstance(context) }
 
-    private fun getActualMovies() : Observable<List<ActualMovie>> {
+    private fun getActualMovies(): Observable<List<ActualMovie>> {
 
         return predictionService.actualMovies
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .map { it.string() }
                 .map { return@map BACKEND_PARSER.parseActualMovies(it) }
                 .onErrorResumeNext { _: Throwable? -> Observable.empty() }
                 .doOnNext { database.insertActualMovies(it) }
     }
 
-    fun getActual() : Maybe<List<ActualMovie>>{
+    fun getActual(): Maybe<List<ActualMovie>> {
         return Observable
                 .concat(getActualMovies(), Observable.just(database.getActualMovies()))
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .firstElement()
                 .observeOn(AndroidSchedulers.mainThread())
     }
@@ -35,34 +36,24 @@ class MovieRepository private constructor(context: Context) {
     private fun fetchStudios(): Observable<List<PredictedStudios>> {
 
         return predictionService.studios
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .map { it.string() }
                 .map { return@map BACKEND_PARSER.parseStudios(it) }
-                .onErrorResumeNext { _: Throwable? -> Observable.empty() }
                 .doOnNext { database.insertStudios(it) }
     }
 
-    fun getStudios(): Maybe<List<StudioPredictions>>? {
+    fun getStudios(): Single<List<StudioPredictions>>? {
 
-        val pairedStudios = fetchStudios()
+        return fetchStudios()
+                .subscribeOn(Schedulers.io())
                 .flatMap { Observable.fromIterable(it) }
                 .flatMap { (movieTitle, studios) -> Observable.fromIterable(studios).map { Pair(it, movieTitle) } }
+                .groupBy { it.first }
+                .flatMap { Observable.just(Pair(it.key, it.map { it.second }.reduce { t1: String?, t2: String? -> "$t1####$t2" })) }
                 .toList()
-                .blockingGet()
-
-        val groupedStudios = pairedStudios.groupBy { it.first }.map { StudioPredictions(it.key, it.value.map { it.second }) }
-
-        if (groupedStudios.isEmpty()) {
-            return Observable.just(database.getStudioPredictions())
-                    .subscribeOn(Schedulers.newThread())
-                    .firstElement()
-                    .observeOn(AndroidSchedulers.mainThread())
-        } else {
-            return Observable.just(groupedStudios)
-                    .subscribeOn(Schedulers.newThread())
-                    .firstElement()
-                    .observeOn(AndroidSchedulers.mainThread())
-        }
+                .map { it.map { StudioPredictions(it.first, it.second.blockingGet().split("####")) } }
+                .onErrorResumeNext { SingleFromUnsafeSource.just(database.getStudioPredictions()) }
+                .observeOn(AndroidSchedulers.mainThread())
     }
 
     fun getMovies(): Maybe<Prediction> {
@@ -75,7 +66,7 @@ class MovieRepository private constructor(context: Context) {
     private fun fetchMovies(): Observable<Prediction> {
 
         return predictionService.moviePredictions
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .map { it.string() }
                 .map { return@map BACKEND_PARSER.parsePrediction(it) }
                 .onErrorResumeNext { _: Throwable? -> Observable.empty() }
@@ -93,8 +84,8 @@ class MovieRepository private constructor(context: Context) {
         return movieService.queryMovie(title)
                 .timeout(10, TimeUnit.SECONDS)
                 .filter { it.results != null }
-                .flatMap { movieService.getFullMovieInfo(it.results!![0].id)}
-                .subscribeOn(Schedulers.newThread())
+                .flatMap { movieService.getFullMovieInfo(it.results!![0].id) }
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext { movieInformation.put(title, it) }
                 .firstElement()
@@ -102,18 +93,11 @@ class MovieRepository private constructor(context: Context) {
 
     companion object {
 
-        private var INSTANCE: MovieRepository? = null
+        private val BACKEND_PARSER: BackendParser by lazy { BackendParser() }
 
-        private val predictionService: PredictionService = Util.createRetrofitService(PredictionService::class.java, PredictionService.BASE_URL)
-        private val movieService: TheMovieDBService = Util.createRetrofitService(TheMovieDBService::class.java, TheMovieDBService.BASE_URL)
+        private val predictionService: PredictionService by lazy { Util.createRetrofitService(PredictionService::class.java, PredictionService.BASE_URL) }
+        private val movieService: TheMovieDBService by lazy { Util.createRetrofitService(TheMovieDBService::class.java, TheMovieDBService.BASE_URL) }
 
         private val movieInformation = HashMap<String, MovieInfo>()
-
-        fun  getInstance(context: Context): MovieRepository {
-            if (INSTANCE == null)
-                INSTANCE = MovieRepository(context)
-
-            return INSTANCE!!
-        }
     }
 }

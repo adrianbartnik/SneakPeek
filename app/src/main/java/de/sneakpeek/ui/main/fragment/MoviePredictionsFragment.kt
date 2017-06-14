@@ -47,9 +47,7 @@ class MoviePredictionsFragment : Fragment() {
             override fun onItemClicked(position: Int) {
                 val title = moviesAdapter?.getTitle(position)
 
-                Toast.makeText(context, title, Toast.LENGTH_LONG).show()
-
-                val subscription = MovieRepository.getInstance(context).fetchFullMovieInformation(title!!)
+                val subscription = MovieRepository(context).fetchFullMovieInformation(title!!)
                         .subscribe({ movie ->
                             if (movie.title == null) {
                                 Toast.makeText(context, "Failed to retrieve information for " + title, Toast.LENGTH_SHORT).show()
@@ -83,7 +81,7 @@ class MoviePredictionsFragment : Fragment() {
 
     fun setMovies() {
 
-        val subscription = MovieRepository.getInstance(context).getMovies()
+        val subscription = MovieRepository(context).getMovies()
                 .doOnEvent { _, _ -> swipeRefreshLayout?.isRefreshing = false }
                 .subscribe({
                     moviesAdapter?.addAll(it)
