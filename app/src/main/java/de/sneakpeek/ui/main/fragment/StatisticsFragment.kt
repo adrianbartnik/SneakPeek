@@ -41,7 +41,7 @@ class StatisticsFragment : Fragment() {
             return
         }
 
-        val entries = stats.map { it.toFloat() / sampleSize }.mapIndexed { index, i -> Entry(index.toFloat(), i) }
+        val entries = stats.map { it.toFloat() / sampleSize }.mapIndexed { index, i -> Entry(index.toFloat() + 1, i) }
 
         val dataSet = LineDataSet(entries, getString(R.string.statistic_fragment_distribution_description));
         dataSet.valueFormatter = IValueFormatter { value, _, _, _ -> String.format("%.1f%%", value * 100) }
@@ -54,7 +54,7 @@ class StatisticsFragment : Fragment() {
             accumulated[i] = sum
         }
 
-        val cumulativeDistribution = accumulated.map { it.toFloat() / sampleSize }.mapIndexed { index, i -> Entry(index.toFloat(), i) }
+        val cumulativeDistribution = accumulated.map { it.toFloat() / sampleSize }.mapIndexed { index, i -> Entry(index.toFloat() + 1, i) }
 
         val dataSetCumulative = LineDataSet(cumulativeDistribution, getString(R.string.statistic_fragment_cumulative_distribution_description))
         dataSetCumulative.valueFormatter = IValueFormatter { value, _, _, _ -> String.format("%.1f%%", value * 100) }
