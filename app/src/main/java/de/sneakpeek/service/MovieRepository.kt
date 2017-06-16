@@ -9,6 +9,8 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.internal.operators.single.SingleFromUnsafeSource
 import io.reactivex.schedulers.Schedulers
+import java.io.InputStreamReader
+import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
 
 class MovieRepository constructor(context: Context) {
@@ -19,7 +21,7 @@ class MovieRepository constructor(context: Context) {
 
         return predictionService.actualMovies
                 .subscribeOn(Schedulers.io())
-                .map { it.string() }
+                .map { InputStreamReader(it.byteStream(), Charset.forName("windows-1252")).readText() }
                 .map { return@map BACKEND_PARSER.parseActualMovies(it) }
                 .onErrorResumeNext { _: Throwable? -> Observable.empty() }
                 .doOnNext { database.insertActualMovies(it) }
@@ -67,7 +69,7 @@ class MovieRepository constructor(context: Context) {
 
         return predictionService.moviePredictions
                 .subscribeOn(Schedulers.io())
-                .map { it.string() }
+                .map { InputStreamReader(it.byteStream(), Charset.forName("windows-1252")).readText() }
                 .map { return@map BACKEND_PARSER.parsePrediction(it) }
                 .onErrorResumeNext { _: Throwable? -> Observable.empty() }
                 .doOnNext { database.insertMoviePredictions(it) }
