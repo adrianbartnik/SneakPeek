@@ -3,10 +3,11 @@ package de.sneakpeek.ui.main.fragment
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.TextView
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -22,24 +23,28 @@ import de.sneakpeek.util.inflate
 class StatisticsFragment : Fragment() {
 
     var lineChart: LineChart? = null
+    var datasetSize: TextView? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val layout = container?.inflate(R.layout.fragment_statistics) as LinearLayout
+        val layout = container?.inflate(R.layout.fragment_statistics) as View
 
         lineChart = layout.findViewById(R.id.fragment_statistics_chart) as LineChart
-
-        setupChart()
+        datasetSize = layout.findViewById(R.id.fragment_statistics_dataset_size) as TextView
 
         return layout
     }
 
-    private fun setupChart() {
+    fun setupChart() {
         val (stats, sampleSize) = calcStatistic()
 
         if (sampleSize == 0) {
             return
         }
+
+        Log.d("Bla", "Called")
+
+        datasetSize?.text = "$sampleSize"
 
         val entries = stats.map { it.toFloat() / sampleSize }.mapIndexed { index, i -> Entry(index.toFloat() + 1, i) }
 
@@ -78,9 +83,7 @@ class StatisticsFragment : Fragment() {
             dataSets.add(dataSetCumulative)
 
             it.data = LineData(dataSets)
-            it.description?.isEnabled = true
-            it.description?.text = "Dataset size: $sampleSize"
-            it.description?.textSize = 14f
+            it.description?.isEnabled = false
 
             it.invalidate()
         }
@@ -99,7 +102,9 @@ class StatisticsFragment : Fragment() {
 
         val correctPrediction = IntArray(predictions.map { it.movies.size }.max() ?: 15)
 
-        for (i in 0..actualMovies.lastIndex) {
+        val datasetSize = Math.min(actualMovies.lastIndex, predictions.lastIndex)
+
+        for (i in 0..datasetSize) {
 
             val prediction = predictions[i]
             val movie = actualMovies[i]
@@ -113,7 +118,7 @@ class StatisticsFragment : Fragment() {
             }
         }
 
-        return Pair(correctPrediction, actualMovies.size)
+        return Pair(correctPrediction, datasetSize)
     }
 
     companion object {

@@ -29,4 +29,5 @@
     <string name="fragment_name_statistics">Statistics</string>
     <string name="statistic_fragment_cumulative_distribution_description">Probability of up until n-th prediction is correct</string>
     <string name="statistic_fragment_distribution_description">Probability of n-th prediction is correct</string>
+    <string name="statistic_fragment_dataset_size">Dataset size:</string>
 </resources>

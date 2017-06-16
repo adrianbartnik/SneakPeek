@@ -43,6 +43,17 @@ class MainActivity : AppCompatActivity() {
         val mPager = findViewById(R.id.activity_main_viewpager) as ViewPager
         mPager.adapter = mPagerAdapter
         mPager.offscreenPageLimit = 3
+        mPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {}
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+            override fun onPageSelected(position: Int) {
+                if (position == 3) {
+                    (mPagerAdapter as SneekPeekPagerAdapter).statisticsFragment.setupChart()
+                }
+            }
+        })
 
         tabLayout.setupWithViewPager(mPager)
 
@@ -81,6 +92,8 @@ class MainActivity : AppCompatActivity() {
 
     private inner class SneekPeekPagerAdapter internal constructor(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
+        val statisticsFragment = StatisticsFragment.newInstance()
+
         override fun getCount(): Int {
             return 4
         }
@@ -91,7 +104,7 @@ class MainActivity : AppCompatActivity() {
                 0 -> return MoviePredictionsFragment.newInstance()
                 1 -> return StudiosFragment.newInstance()
                 2 -> return ActualMoviesFragment.newInstance()
-                3 -> return StatisticsFragment.newInstance()
+                3 -> return statisticsFragment
                 else -> throw IllegalArgumentException()
             }
         }
