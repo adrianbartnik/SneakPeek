@@ -24,6 +24,8 @@ public class FastScroll extends RecyclerView {
     public static final int SECTION_TEXT_WIDTH = 25;
     public static final int SECTION_TEXT_HEIGHT = 18;
 
+    private static final int PADDING_BOTTOM = 40;
+
     public float scaledWidth;
     public float scaledHeight;
     public Character[] sections;
@@ -65,9 +67,10 @@ public class FastScroll extends RecyclerView {
         Set<Character> sectionSet = ((FastScrollRecyclerViewInterface) getAdapter()).getMapIndex().keySet();
         List<Character> listSection = new ArrayList<>(sectionSet);
 
-        // Removes items, if number of sections would not fit on screen
-        while (getHeight() <= listSection.size() * scaledHeight) {
-            listSection.remove(new Random().nextInt(listSection.size()));
+        // Removes items, if number of sections would not fit on screen,
+        // but never remove first or last item
+        while (getHeight() - PADDING_BOTTOM <= listSection.size() * scaledHeight) {
+            listSection.remove(new Random().nextInt(listSection.size() - 2) + 1);
         }
 
         // Sort sections as well, so Ö appears together with O and not at the end
@@ -88,7 +91,7 @@ public class FastScroll extends RecyclerView {
         }
 
         sx = this.getWidth() - this.getPaddingRight() - (float) (1.2 * scaledWidth);
-        sy = (float) ((this.getHeight() - (scaledHeight * sections.length)) / 2.0);
+        sy = (float) ((this.getHeight() - PADDING_BOTTOM - (scaledHeight * sections.length)) / 2.0);
         setupComplete = true;
     }
 
