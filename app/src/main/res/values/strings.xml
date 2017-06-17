@@ -24,7 +24,7 @@
     <string name="actual_week">Week %1$s - %2$s</string>
     <string name="activity_detail_budget_na">NA</string>
     <string name="dialog_about_title">About</string>
-    <string name="dialog_about_text">SneakPeek shows the movie predictions for the upcoming sneak preview at Cineplex Potsdamer Platz, the list of studios for the corresponding movies and the previously shown movies.\n\nVersion %1$s\n\n</string>
+    <string name="dialog_about_text">SneakPeek shows the movie predictions for the upcoming sneak preview at Cineplex Potsdamer Platz, the list of studios for the corresponding movies and the previously shown movies.\n\nVersion %1$s</string>
     <string name="banana_image">Banana image</string>
     <string name="fragment_name_statistics">Statistics</string>
     <string name="statistic_fragment_cumulative_distribution_description">Probability of up until n-th prediction is correct</string>
