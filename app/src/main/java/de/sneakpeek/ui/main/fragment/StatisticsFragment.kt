@@ -93,6 +93,9 @@ class StatisticsFragment : Fragment() {
      * Returns an array with the number of correct predictions and the number of sneaks
      */
     private fun calcStatistic(): Pair<IntArray, Int> {
+
+        val context = context ?: return Pair(kotlin.IntArray(0), 0)
+
         val predictions = SneakPeekDatabaseHelper.GetInstance(context).getMoviePredictions().reversed()
         val actualMovies = SneakPeekDatabaseHelper.GetInstance(context).getActualMovies()
 

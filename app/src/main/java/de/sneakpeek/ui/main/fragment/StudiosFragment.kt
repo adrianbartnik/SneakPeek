@@ -12,6 +12,7 @@ import android.widget.Toast
 import de.sneakpeek.R
 import de.sneakpeek.adapter.StudiosAdapter
 import de.sneakpeek.service.MovieRepository
+import de.sneakpeek.util.DividerItemDecoration
 import de.sneakpeek.util.inflate
 import de.sneakpeek.view.FastScroll
 import de.sneakpeek.view.FastScrollItemDecorator
@@ -33,6 +34,9 @@ class StudiosFragment : Fragment() {
 
             it.addItemDecoration(FastScrollItemDecorator(context))
             it.itemAnimator = DefaultItemAnimator()
+
+            val itemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST)
+            it.addItemDecoration(itemDecoration)
         }
 
         return fastScroll

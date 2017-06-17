@@ -26,15 +26,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
-                android:textSize="18sp"
-                android:text="@string/statistic_fragment_dataset_size"/>
+                android:text="@string/statistic_fragment_dataset_size"
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/fragment_statistics_dataset_size"
                 style="@style/TextAppearance.AppCompat.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 tools:text="41"/>
 
         </LinearLayout>

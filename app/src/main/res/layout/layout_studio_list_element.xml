@@ -12,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/studio_list_item_title"
@@ -20,5 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="16sp"/>
 </LinearLayout>

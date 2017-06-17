@@ -51,7 +51,7 @@ class StudiosAdapter(private var studios: List<StudioPredictions>) : FastScroll.
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val studioPrediction = studios[position]
         holder.studios.text = studioPrediction.studioTitle
-        holder.title.text = TextUtils.join(", ", studioPrediction.movies)
+        holder.title.text = TextUtils.join("\n", studioPrediction.movies)
     }
 
     override fun getItemCount(): Int {
