@@ -10,7 +10,6 @@
         style="@style/SneakPeekDetailInfoText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:text="Large Text"
         android:textAllCaps="false"
@@ -19,10 +18,10 @@
 
     <TextView
         android:id="@+id/actor_list_item_name"
+        style="@style/SneakPeekDetailInfoText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        style="@style/SneakPeekDetailInfoText"
         android:text="Medium Text"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 </LinearLayout>

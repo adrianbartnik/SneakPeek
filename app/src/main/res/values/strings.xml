@@ -34,4 +34,5 @@
     <string name="fragment_statistics_studios_number">Number of Studios:</string>
     <string name="fragment_statistics_unique_predictions">Unique Predictions:</string>
     <string name="fragment_statistics_actual_movies">Actual Movies:</string>
+    <string name="activity_detail_vote_average_na">-</string>
 </resources>

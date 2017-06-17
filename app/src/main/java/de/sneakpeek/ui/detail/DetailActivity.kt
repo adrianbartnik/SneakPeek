@@ -2,7 +2,13 @@ package de.sneakpeek.ui.detail
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -44,13 +50,19 @@ class DetailActivity : AppCompatActivity() {
 
         val movie = intent.extras.getParcelable<MovieInfo>(MOVIE_KEY)
 
-        Log.d(TAG, "Received $movie")
-
         val poster = findViewById(R.id.activity_detail_poster) as ImageView
         Picasso.with(this@DetailActivity)
                 .load("${TheMovieDBService.IMAGE_URL}${movie?.poster_path}")
                 .placeholder(R.drawable.movie_poster_placeholder)
                 .into(poster)
+
+        val fab = findViewById(R.id.activity_movie_fab) as FloatingActionButton
+        val vote_average_fab = if (movie.vote_average.compareTo(0) == 0) {
+            getString(R.string.activity_detail_vote_average_na)
+        } else {
+            "${movie.vote_average}"
+        }
+        fab.setImageBitmap(textAsBitmap(vote_average_fab, 40f, Color.WHITE))
 
         val director = findViewById(R.id.activity_detail_director) as TextView
         director.text = movie.director
@@ -110,5 +122,20 @@ class DetailActivity : AppCompatActivity() {
             intent.putExtra(MOVIE_KEY, movie)
             return intent
         }
+    }
+
+    fun textAsBitmap(text: String, textSize: Float, textColor: Int): Bitmap {
+        val paint = Paint(ANTI_ALIAS_FLAG)
+        paint.textSize = textSize
+        paint.color = textColor
+        paint.textAlign = Paint.Align.LEFT
+        val baseline = -paint.ascent() // ascent() is negative
+        val image = Bitmap.createBitmap(paint.measureText(text).toInt(),
+                baseline.toInt() + paint.descent().toInt(),
+                Bitmap.Config.ARGB_8888)
+
+        val canvas = Canvas(image)
+        canvas.drawText(text, 0f, baseline, paint)
+        return image
     }
 }

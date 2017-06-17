@@ -3,9 +3,10 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
+              android:paddingBottom="10dp"
+              android:paddingTop="10dp"
               android:paddingLeft="16dp"
-              android:paddingRight="16dp"
-    android:paddingBottom="4dp">
+              android:paddingRight="16dp">
 
     <TextView
         android:id="@+id/studio_list_item_studio"
@@ -13,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="20sp"/>
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/studio_list_item_title"

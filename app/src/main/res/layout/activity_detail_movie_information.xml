@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="24dp"
     android:descendantFocusability="blocksDescendants"
+    android:paddingBottom="24dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
@@ -14,11 +14,12 @@
         style="@style/SneakPeekDetailInfoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@color/secondary_text"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="112 min"/>
 
@@ -28,14 +29,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/secondary_text"
+        android:textSize="14sp"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Action | Romance | Thriller"
-        app:layout_constraintRight_toLeftOf="@+id/activity_detail_runtime"
-        android:layout_marginRight="8dp"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_runtime"
+        tools:text="Action | Romance | Thriller"/>
 
     <TextView
         android:id="@+id/activity_detail_plot"
@@ -46,7 +50,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -254,11 +258,11 @@
         android:id="@+id/activity_detail_recycler_view_actors"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/activity_detail_actors_text"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_actors_text"/>
 
 </android.support.constraint.ConstraintLayout>
