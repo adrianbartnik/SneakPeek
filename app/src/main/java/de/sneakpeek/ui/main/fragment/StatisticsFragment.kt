@@ -3,12 +3,9 @@ package de.sneakpeek.ui.main.fragment
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -18,35 +15,34 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import de.sneakpeek.R
 import de.sneakpeek.data.SneakPeekDatabaseHelper
 import de.sneakpeek.util.inflate
+import kotlinx.android.synthetic.main.fragment_statistics.*
 
 
 class StatisticsFragment : Fragment() {
 
-    var lineChart: LineChart? = null
-    var datasetSize: TextView? = null
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return container?.inflate(R.layout.fragment_statistics)
+    }
 
-        val layout = container?.inflate(R.layout.fragment_statistics) as View
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        lineChart = layout.findViewById(R.id.fragment_statistics_chart) as LineChart
-        datasetSize = layout.findViewById(R.id.fragment_statistics_dataset_size) as TextView
-
-        return layout
+        setupChart()
     }
 
     fun setupChart() {
-        val (stats, sampleSize) = calcStatistic()
+        val (stats, statistics) = calcStatistic()
 
-        if (sampleSize == 0) {
+        if (statistics.numberOfMovies == 0) {
             return
         }
 
-        Log.d("Bla", "Called")
+        fragment_statistics_actual_movies.text = "${statistics.numberOfMovies}"
+        fragment_statistics_studios_number.text = "${statistics.numberOfStudios}"
+        fragment_statistics_total_predictions.text = "${statistics.numberOfPredictions}"
+        fragment_statistics_unique_predictions.text = "${statistics.numberOfUniquePredictions}"
 
-        datasetSize?.text = "$sampleSize"
-
-        val entries = stats.map { it.toFloat() / sampleSize }.mapIndexed { index, i -> Entry(index.toFloat() + 1, i) }
+        val entries = stats.map { it.toFloat() / statistics.numberOfMovies }.mapIndexed { index, i -> Entry(index.toFloat() + 1, i) }
 
         val dataSet = LineDataSet(entries, getString(R.string.statistic_fragment_distribution_description));
         dataSet.valueFormatter = IValueFormatter { value, _, _, _ -> String.format("%.1f%%", value * 100) }
@@ -59,48 +55,46 @@ class StatisticsFragment : Fragment() {
             accumulated[i] = sum
         }
 
-        val cumulativeDistribution = accumulated.map { it.toFloat() / sampleSize }.mapIndexed { index, i -> Entry(index.toFloat() + 1, i) }
+        val cumulativeDistribution = accumulated.map { it.toFloat() / statistics.numberOfMovies }.mapIndexed { index, i -> Entry(index.toFloat() + 1, i) }
 
         val dataSetCumulative = LineDataSet(cumulativeDistribution, getString(R.string.statistic_fragment_cumulative_distribution_description))
         dataSetCumulative.valueFormatter = IValueFormatter { value, _, _, _ -> String.format("%.1f%%", value * 100) }
         dataSetCumulative.color = ContextCompat.getColor(context, R.color.primary)
         dataSetCumulative.setCircleColor(ContextCompat.getColor(context, R.color.primary))
 
-        lineChart?.let {
-            it.xAxis?.position = XAxis.XAxisPosition.BOTTOM
-            it.xAxis?.isGranularityEnabled = true
-            it.xAxis?.granularity = 1f
-            it.xAxis?.mAxisMaximum = stats.size.toFloat()
-            it.axisRight?.isEnabled = false
-            it.xAxis?.labelCount = 10
+        fragment_statistics_chart.xAxis?.position = XAxis.XAxisPosition.BOTTOM
+        fragment_statistics_chart.xAxis?.isGranularityEnabled = true
+        fragment_statistics_chart.xAxis?.granularity = 1f
+        fragment_statistics_chart.xAxis?.mAxisMaximum = stats.size.toFloat()
+        fragment_statistics_chart.axisRight?.isEnabled = false
+        fragment_statistics_chart.xAxis?.labelCount = 15
 
-            it.legend?.isEnabled = true
-            it.legend?.isWordWrapEnabled = true
-            it.legend?.textSize = 14f
+        fragment_statistics_chart.legend?.isEnabled = true
+        fragment_statistics_chart.legend?.isWordWrapEnabled = true
+        fragment_statistics_chart.legend?.textSize = 14f
 
-            val dataSets = ArrayList<ILineDataSet>()
-            dataSets.add(dataSet)
-            dataSets.add(dataSetCumulative)
+        val dataSets = ArrayList<ILineDataSet>()
+        dataSets.add(dataSet)
+        dataSets.add(dataSetCumulative)
 
-            it.data = LineData(dataSets)
-            it.description?.isEnabled = false
+        fragment_statistics_chart.data = LineData(dataSets)
+        fragment_statistics_chart.description?.isEnabled = false
 
-            it.invalidate()
-        }
+        fragment_statistics_chart.invalidate()
     }
 
     /**
      * Returns an array with the number of correct predictions and the number of sneaks
      */
-    private fun calcStatistic(): Pair<IntArray, Int> {
+    private fun calcStatistic(): Pair<IntArray, SneakStatistics> {
 
-        val context = context ?: return Pair(kotlin.IntArray(0), 0)
+        val context = context ?: return Pair(kotlin.IntArray(0), SneakStatistics())
 
         val predictions = SneakPeekDatabaseHelper.GetInstance(context).getMoviePredictions().reversed()
         val actualMovies = SneakPeekDatabaseHelper.GetInstance(context).getActualMovies()
 
         if (actualMovies.isEmpty()) {
-            return Pair(kotlin.IntArray(0), 0)
+            return Pair(kotlin.IntArray(0), SneakStatistics())
         }
 
         val correctPrediction = IntArray(predictions.map { it.movies.size }.max() ?: 15)
@@ -121,7 +115,12 @@ class StatisticsFragment : Fragment() {
             }
         }
 
-        return Pair(correctPrediction, datasetSize)
+        val numberOfStudios = SneakPeekDatabaseHelper.GetInstance(context).getStudios().size
+        val numberOfPredictions = predictions.map { it.movies }.map { it.size }.sum()
+        val numberOfUniquePredictions = predictions.flatMap { it.movies }.distinctBy { it.title }.size
+
+        return Pair(correctPrediction,
+                SneakStatistics(datasetSize, numberOfStudios, numberOfPredictions, numberOfUniquePredictions))
     }
 
     companion object {
@@ -130,4 +129,9 @@ class StatisticsFragment : Fragment() {
             return StatisticsFragment()
         }
     }
+
+    data class SneakStatistics(val numberOfMovies: Int = -1,
+                               val numberOfStudios: Int = -1,
+                               val numberOfPredictions: Int = -1,
+                               val numberOfUniquePredictions: Int = -1)
 }

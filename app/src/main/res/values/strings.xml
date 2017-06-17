@@ -30,4 +30,8 @@
     <string name="statistic_fragment_cumulative_distribution_description">Probability of up until n-th prediction is correct</string>
     <string name="statistic_fragment_distribution_description">Probability of n-th prediction is correct</string>
     <string name="statistic_fragment_dataset_size">Dataset size:</string>
+    <string name="fragment_statistics_total_predictions">Total Predictions:</string>
+    <string name="fragment_statistics_studios_number">Number of Studios:</string>
+    <string name="fragment_statistics_unique_predictions">Unique Predictions:</string>
+    <string name="fragment_statistics_actual_movies">Actual Movies:</string>
 </resources>
