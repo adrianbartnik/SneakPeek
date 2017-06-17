@@ -1,6 +1,5 @@
 package de.sneakpeek.adapter
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,13 +7,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import de.sneakpeek.R
 import de.sneakpeek.data.ActualMovie
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ActualMoviesAdapter(
-        private val context: Context,
         private var movieTitles: List<ActualMovie>,
         private val clickListener: PreviousMovieViewHolder.ClickListener) :
         RecyclerView.Adapter<ActualMoviesAdapter.PreviousMovieViewHolder>() {
+
+    val calendar: Calendar = Calendar.getInstance()
+    val dateFormat: DateFormat = SimpleDateFormat.getDateInstance()
 
     fun addAll(movieTitles: List<ActualMovie>) {
         this.movieTitles = movieTitles.reversed()
@@ -34,7 +38,12 @@ class ActualMoviesAdapter(
     override fun onBindViewHolder(holder: PreviousMovieViewHolder, position: Int) {
         val movie = movieTitles[position]
         val date = movie.formatWeek()
-        holder.date.text = context.getString(R.string.actual_week, date.week, date.year)
+
+        calendar.set(Calendar.YEAR, date.year)
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+        calendar.set(Calendar.WEEK_OF_YEAR, date.week)
+
+        holder.date.text = dateFormat.format(calendar.time)
         holder.title.text = movie.title
     }
 

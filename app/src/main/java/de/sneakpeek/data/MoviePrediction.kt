@@ -9,14 +9,14 @@ data class ActualMovie(val title: String, val week: String) {
         val split = week.split("-")
 
         if (split.size == 2) {
-            return MovieWeek(split[1], split[0])
+            return MovieWeek(split[1].toInt(), split[0].toInt())
         } else {
-            return MovieWeek("InvalidFormat", "InvalidFormat")
+            return MovieWeek(-1, -1)
         }
     }
 }
 
-data class MovieWeek(val week: String, val year: String)
+data class MovieWeek(val week: Int, val year: Int)
 
 data class PredictedStudios(val movieTitle: String, val studios: List<String>)
 

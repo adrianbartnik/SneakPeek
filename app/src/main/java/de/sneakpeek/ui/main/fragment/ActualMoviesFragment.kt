@@ -40,8 +40,7 @@ class ActualMoviesFragment : Fragment() {
         val itemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST)
         recyclerView.addItemDecoration(itemDecoration)
 
-        moviesAdapter = ActualMoviesAdapter(context,
-                ArrayList<ActualMovie>(), object : ActualMoviesAdapter.PreviousMovieViewHolder.ClickListener {
+        moviesAdapter = ActualMoviesAdapter(ArrayList<ActualMovie>(), object : ActualMoviesAdapter.PreviousMovieViewHolder.ClickListener {
             override fun onItemClicked(position: Int) {
                 val title = moviesAdapter?.getTitle(position)
 
