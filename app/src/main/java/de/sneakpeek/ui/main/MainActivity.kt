@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -43,25 +43,12 @@ class MainActivity : AppCompatActivity() {
         val mPager = findViewById(R.id.activity_main_viewpager) as ViewPager
         mPager.adapter = mPagerAdapter
         mPager.offscreenPageLimit = 3
-        mPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {}
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
-
-            override fun onPageSelected(position: Int) {
-                if (position == 3) {
-                    ((mPagerAdapter as SneekPeekPagerAdapter).getItem(position) as StatisticsFragment).setupChart()
-                }
-            }
-        })
 
         tabLayout.setupWithViewPager(mPager)
 
         mPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                mPager.currentItem = tab.position
-            }
+            override fun onTabSelected(tab: TabLayout.Tab) { mPager.currentItem = tab.position }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {}
 
@@ -90,12 +77,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private inner class SneekPeekPagerAdapter internal constructor(fm: FragmentManager) : FragmentPagerAdapter(fm) {
-
-        val predictionFragment = MoviePredictionsFragment.newInstance()
-        val studioFragment = StudiosFragment.newInstance()
-        val actualMovieFragment =  ActualMoviesFragment.newInstance()
-        val statisticsFragment = StatisticsFragment.newInstance()
+    private inner class SneekPeekPagerAdapter internal constructor(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
         override fun getCount(): Int {
             return 4
@@ -104,10 +86,10 @@ class MainActivity : AppCompatActivity() {
         override fun getItem(position: Int): Fragment {
 
             when (position) {
-                0 -> return predictionFragment
-                1 -> return studioFragment
-                2 -> return actualMovieFragment
-                3 -> return statisticsFragment
+                0 -> return MoviePredictionsFragment.newInstance()
+                1 -> return StudiosFragment.newInstance()
+                2 -> return ActualMoviesFragment.newInstance()
+                3 -> return StatisticsFragment.newInstance()
                 else -> throw IllegalArgumentException()
             }
         }
