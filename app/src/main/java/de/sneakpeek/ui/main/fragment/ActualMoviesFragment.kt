@@ -44,14 +44,18 @@ class ActualMoviesFragment : Fragment() {
             override fun onItemClicked(position: Int) {
                 val title = moviesAdapter?.getTitle(position)
 
+                swipeRefreshLayout?.isRefreshing = true
+
                 val subscription = MovieRepository(context).fetchFullMovieInformation(title!!.title)
                         .subscribe({ movie ->
+                            swipeRefreshLayout?.isRefreshing = false
                             if (movie.title == null) {
                                 Toast.makeText(context, "Failed to retrieve information for " + title, Toast.LENGTH_SHORT).show()
                             } else {
                                 startActivity(DetailActivity.StartMovieActivity(context, movie))
                             }
                         }) { throwable ->
+                            swipeRefreshLayout?.isRefreshing = false
                             Toast.makeText(context, "Failed to fetch information for " + title, Toast.LENGTH_SHORT).show()
                             Log.e(TAG, "Failed to fetch information for $throwable", throwable)
                         }
