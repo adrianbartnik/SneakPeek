@@ -8,21 +8,19 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import android.text.TextUtils
 import android.util.Log
-import android.widget.ImageView
-import android.widget.TextView
 import com.squareup.picasso.Picasso
 import de.sneakpeek.R
 import de.sneakpeek.adapter.ActorsAdapter
 import de.sneakpeek.data.MovieInfo
 import de.sneakpeek.service.TheMovieDBService
 import de.sneakpeek.util.Util
+import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.activity_detail_movie_information.*
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,9 +34,8 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        val toolbar = findViewById(R.id.activity_detail_toolbar) as Toolbar
-        toolbar.title = ""
-        setSupportActionBar(toolbar)
+        activity_detail_toolbar.title = ""
+        setSupportActionBar(activity_detail_toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -50,60 +47,54 @@ class DetailActivity : AppCompatActivity() {
 
         val movie = intent.extras.getParcelable<MovieInfo>(MOVIE_KEY)
 
-        val poster = findViewById(R.id.activity_detail_poster) as ImageView
         Picasso.with(this@DetailActivity)
                 .load("${TheMovieDBService.IMAGE_URL}${movie?.poster_path}")
                 .placeholder(R.drawable.movie_poster_placeholder)
-                .into(poster)
+                .into(activity_detail_poster)
 
-        val fab = findViewById(R.id.activity_movie_fab) as FloatingActionButton
         val vote_average_fab = if (movie.vote_average.compareTo(0) == 0) {
             getString(R.string.activity_detail_vote_average_na)
         } else {
             "${movie.vote_average}"
         }
-        fab.setImageBitmap(textAsBitmap(vote_average_fab, 40f, Color.WHITE))
+        activity_movie_fab.setImageBitmap(textAsBitmap(vote_average_fab, 40f, Color.WHITE))
 
-        val director = findViewById(R.id.activity_detail_director) as TextView
-        director.text = movie.director
+        activity_detail_original_title.text = if (TextUtils.isEmpty(movie.original_title)) {
+            ""
+        } else {
+            " - ${movie.original_title}"
+        }
 
-        val language = findViewById(R.id.activity_detail_original_language) as TextView
-        language.text = Locale(movie.original_language).displayLanguage
+        activity_detail_director.text = movie.director
 
-        val genre = findViewById(R.id.activity_detail_genre) as TextView
-        genre.text = movie?.genres?.map { it.name ?: "" }?.reduce { acc, s -> "$acc | $s" }
+        activity_detail_original_language.text = Locale(movie.original_language).displayLanguage
+        
+        activity_detail_genre.text = movie?.genres?.map { it.name ?: "" }?.reduce { acc, s -> "$acc | $s" }
 
-        val vote_average = findViewById(R.id.activity_detail_vote_average) as TextView
-        vote_average.text = "${movie.vote_average} / 10"
+        activity_detail_vote_average.text = "${movie.vote_average} / 10"
 
         val numberFormatter = NumberFormat.getCurrencyInstance()
         numberFormatter.minimumFractionDigits = 0
-        val budget = findViewById(R.id.activity_detail_budget) as TextView
-        budget.text = if (movie.budget == 0) {
+        activity_detail_budget.text = if (movie.budget == 0) {
             getText(R.string.activity_detail_budget_na)
         } else {
             numberFormatter.format(movie.budget)
         }
 
-        val plot = findViewById(R.id.activity_detail_plot) as TextView
-        plot.text = movie.overview
+        activity_detail_plot.text = movie.overview
 
-        val released = findViewById(R.id.activity_detail_released) as TextView
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY).parse(movie.release_date)
-        released.text = SimpleDateFormat.getDateInstance().format(format)
+        activity_detail_released.text = SimpleDateFormat.getDateInstance().format(format)
 
-        val runtime = findViewById(R.id.activity_detail_runtime) as TextView
-        runtime.text = "${movie.runtime} min"
+        activity_detail_runtime.text = "${movie.runtime} min"
 
-        val writer = findViewById(R.id.activity_detail_writer) as TextView
-        writer.text = movie.writer
+        activity_detail_writer.text = movie.writer
 
-        val actorsRecyclerView = findViewById(R.id.activity_detail_recycler_view_actors) as RecyclerView
-        actorsRecyclerView.setHasFixedSize(true)
-        actorsRecyclerView.adapter = ActorsAdapter(movie.credits?.cast ?: emptyList())
-        actorsRecyclerView.itemAnimator = DefaultItemAnimator()
-        actorsRecyclerView.layoutManager = LinearLayoutManager(baseContext)
-        actorsRecyclerView.isNestedScrollingEnabled = false
+        activity_detail_recycler_view_actors.setHasFixedSize(true)
+        activity_detail_recycler_view_actors.adapter = ActorsAdapter(movie.credits?.cast ?: emptyList())
+        activity_detail_recycler_view_actors.itemAnimator = DefaultItemAnimator()
+        activity_detail_recycler_view_actors.layoutManager = LinearLayoutManager(baseContext)
+        activity_detail_recycler_view_actors.isNestedScrollingEnabled = false
     }
 
     override fun onSupportNavigateUp(): Boolean {
