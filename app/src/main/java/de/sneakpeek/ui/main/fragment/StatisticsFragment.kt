@@ -6,6 +6,8 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -20,6 +22,12 @@ import kotlinx.android.synthetic.main.fragment_statistics.*
 
 class StatisticsFragment : Fragment() {
 
+    private val actual_movies: TextView by lazy { fragment_statistics_actual_movies }
+    private val studios_number: TextView by lazy { fragment_statistics_studios_number }
+    private val total_predictions: TextView by lazy { fragment_statistics_total_predictions }
+    private val unique_predictions: TextView by lazy { fragment_statistics_unique_predictions }
+    private val statistics_chart: LineChart by lazy { fragment_statistics_chart }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return container?.inflate(R.layout.fragment_statistics)
     }
@@ -33,20 +41,21 @@ class StatisticsFragment : Fragment() {
     fun setupChart() {
         val (stats, statistics) = calcStatistic()
 
-        if (statistics.numberOfMovies == 0) {
+        if (statistics.numberOfMovies == -1) {
             return
         }
 
-        fragment_statistics_actual_movies.text = "${statistics.numberOfMovies}"
-        fragment_statistics_studios_number.text = "${statistics.numberOfStudios}"
-        fragment_statistics_total_predictions.text = "${statistics.numberOfPredictions}"
-        fragment_statistics_unique_predictions.text = "${statistics.numberOfUniquePredictions}"
+        actual_movies.text = "${statistics.numberOfMovies}"
+        studios_number.text = "${statistics.numberOfStudios}"
+        total_predictions.text = "${statistics.numberOfPredictions}"
+        unique_predictions.text = "${statistics.numberOfUniquePredictions}"
 
         val entries = stats.map { it.toFloat() / statistics.numberOfMovies }.mapIndexed { index, i -> Entry(index.toFloat() + 1, i) }
 
         val dataSet = LineDataSet(entries, getString(R.string.statistic_fragment_distribution_description));
         dataSet.valueFormatter = IValueFormatter { value, _, _, _ -> String.format("%.1f%%", value * 100) }
         dataSet.color = ContextCompat.getColor(context, R.color.accent)
+        dataSet.circleColors = listOf(ContextCompat.getColor(context, R.color.accent))
 
         var sum = 0
         val accumulated = IntArray(entries.size)
@@ -62,33 +71,31 @@ class StatisticsFragment : Fragment() {
         dataSetCumulative.color = ContextCompat.getColor(context, R.color.primary)
         dataSetCumulative.setCircleColor(ContextCompat.getColor(context, R.color.primary))
 
-        fragment_statistics_chart.xAxis?.position = XAxis.XAxisPosition.BOTTOM
-        fragment_statistics_chart.xAxis?.isGranularityEnabled = true
-        fragment_statistics_chart.xAxis?.granularity = 1f
-        fragment_statistics_chart.xAxis?.mAxisMaximum = stats.size.toFloat()
-        fragment_statistics_chart.axisRight?.isEnabled = false
-        fragment_statistics_chart.xAxis?.labelCount = 15
+        statistics_chart.xAxis?.position = XAxis.XAxisPosition.BOTTOM
+        statistics_chart.xAxis?.isGranularityEnabled = true
+        statistics_chart.xAxis?.granularity = 1f
+        statistics_chart.xAxis?.mAxisMaximum = stats.size.toFloat()
+        statistics_chart.axisRight?.isEnabled = false
+        statistics_chart.xAxis?.labelCount = 15
 
-        fragment_statistics_chart.legend?.isEnabled = true
-        fragment_statistics_chart.legend?.isWordWrapEnabled = true
-        fragment_statistics_chart.legend?.textSize = 14f
+        statistics_chart.legend?.isEnabled = true
+        statistics_chart.legend?.isWordWrapEnabled = true
+        statistics_chart.legend?.textSize = 14f
 
         val dataSets = ArrayList<ILineDataSet>()
         dataSets.add(dataSet)
         dataSets.add(dataSetCumulative)
 
-        fragment_statistics_chart.data = LineData(dataSets)
-        fragment_statistics_chart.description?.isEnabled = false
+        statistics_chart.data = LineData(dataSets)
+        statistics_chart.description?.isEnabled = false
 
-        fragment_statistics_chart.invalidate()
+        statistics_chart.invalidate()
     }
 
     /**
      * Returns an array with the number of correct predictions and the number of sneaks
      */
     private fun calcStatistic(): Pair<IntArray, SneakStatistics> {
-
-        val context = context ?: return Pair(kotlin.IntArray(0), SneakStatistics())
 
         val predictions = SneakPeekDatabaseHelper.GetInstance(context).getMoviePredictions().reversed()
         val actualMovies = SneakPeekDatabaseHelper.GetInstance(context).getActualMovies()

@@ -68,7 +68,7 @@ class DetailActivity : AppCompatActivity() {
         activity_detail_director.text = movie.director
 
         activity_detail_original_language.text = Locale(movie.original_language).displayLanguage
-        
+
         activity_detail_genre.text = movie?.genres?.map { it.name ?: "" }?.reduce { acc, s -> "$acc | $s" }
 
         activity_detail_vote_average.text = "${movie.vote_average} / 10"

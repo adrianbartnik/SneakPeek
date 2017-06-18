@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onPageSelected(position: Int) {
                 if (position == 3) {
-                    (mPagerAdapter as SneekPeekPagerAdapter).statisticsFragment.setupChart()
+                    ((mPagerAdapter as SneekPeekPagerAdapter).getItem(position) as StatisticsFragment).setupChart()
                 }
             }
         })
@@ -92,6 +92,9 @@ class MainActivity : AppCompatActivity() {
 
     private inner class SneekPeekPagerAdapter internal constructor(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
+        val predictionFragment = MoviePredictionsFragment.newInstance()
+        val studioFragment = StudiosFragment.newInstance()
+        val actualMovieFragment =  ActualMoviesFragment.newInstance()
         val statisticsFragment = StatisticsFragment.newInstance()
 
         override fun getCount(): Int {
@@ -101,9 +104,9 @@ class MainActivity : AppCompatActivity() {
         override fun getItem(position: Int): Fragment {
 
             when (position) {
-                0 -> return MoviePredictionsFragment.newInstance()
-                1 -> return StudiosFragment.newInstance()
-                2 -> return ActualMoviesFragment.newInstance()
+                0 -> return predictionFragment
+                1 -> return studioFragment
+                2 -> return actualMovieFragment
                 3 -> return statisticsFragment
                 else -> throw IllegalArgumentException()
             }
