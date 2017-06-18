@@ -1,8 +1,8 @@
 package de.sneakpeek.ui.main.fragment
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +17,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import de.sneakpeek.R
 import de.sneakpeek.data.SneakPeekDatabaseHelper
 import de.sneakpeek.util.inflate
+import de.sneakpeek.util.resolveColor
 import kotlinx.android.synthetic.main.fragment_statistics.*
 
 
@@ -27,6 +28,10 @@ class StatisticsFragment : Fragment() {
     private val total_predictions: TextView by lazy { fragment_statistics_total_predictions }
     private val unique_predictions: TextView by lazy { fragment_statistics_unique_predictions }
     private val statistics_chart: LineChart by lazy { fragment_statistics_chart }
+
+    private val graphColor by lazy { (context as Activity).theme.resolveColor(R.attr.graphColor) }
+    private val graphColorAccumulated by lazy { (context as Activity).theme.resolveColor(R.attr.graphColorAccumulated) }
+    private val textColor by lazy { (context as Activity).theme.resolveColor(R.attr.graphTextColor) }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return container?.inflate(R.layout.fragment_statistics)
@@ -54,8 +59,9 @@ class StatisticsFragment : Fragment() {
 
         val dataSet = LineDataSet(entries, getString(R.string.statistic_fragment_distribution_description));
         dataSet.valueFormatter = IValueFormatter { value, _, _, _ -> String.format("%.1f%%", value * 100) }
-        dataSet.color = ContextCompat.getColor(context, R.color.accent)
-        dataSet.circleColors = listOf(ContextCompat.getColor(context, R.color.accent))
+        dataSet.color = graphColor
+        dataSet.setCircleColor(graphColor)
+        dataSet.valueTextColor = textColor
 
         var sum = 0
         val accumulated = IntArray(entries.size)
@@ -68,8 +74,9 @@ class StatisticsFragment : Fragment() {
 
         val dataSetCumulative = LineDataSet(cumulativeDistribution, getString(R.string.statistic_fragment_cumulative_distribution_description))
         dataSetCumulative.valueFormatter = IValueFormatter { value, _, _, _ -> String.format("%.1f%%", value * 100) }
-        dataSetCumulative.color = ContextCompat.getColor(context, R.color.primary)
-        dataSetCumulative.setCircleColor(ContextCompat.getColor(context, R.color.primary))
+        dataSetCumulative.color = graphColorAccumulated
+        dataSetCumulative.setCircleColor(graphColorAccumulated)
+        dataSetCumulative.valueTextColor = textColor
 
         statistics_chart.xAxis?.position = XAxis.XAxisPosition.BOTTOM
         statistics_chart.xAxis?.isGranularityEnabled = true
@@ -78,9 +85,13 @@ class StatisticsFragment : Fragment() {
         statistics_chart.axisRight?.isEnabled = false
         statistics_chart.xAxis?.labelCount = 15
 
+        statistics_chart.xAxis.textColor = textColor
+        statistics_chart.axisLeft.textColor = textColor
+
         statistics_chart.legend?.isEnabled = true
         statistics_chart.legend?.isWordWrapEnabled = true
         statistics_chart.legend?.textSize = 14f
+        statistics_chart.legend?.textColor = textColor
 
         val dataSets = ArrayList<ILineDataSet>()
         dataSets.add(dataSet)

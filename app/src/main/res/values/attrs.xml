@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="primaryTextStyle" format="reference"/>
+    <attr name="secondaryTextStyle" format="reference"/>
+    <attr name="graphTextColor" format="reference"/>
+    <attr name="graphColor" format="reference"/>
+    <attr name="graphColorAccumulated" format="reference"/>
+</resources>

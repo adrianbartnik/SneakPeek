@@ -4,21 +4,41 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
+        <item name="primaryTextStyle">@style/primaryTextLight</item>
+        <item name="secondaryTextStyle">@style/secondaryTextLight</item>
+        <item name="graphTextColor">@color/chartTextColorLight</item>
+        <item name="graphColor">@color/primary</item>
+        <item name="graphColorAccumulated">@color/accent</item>
     </style>
 
     <style name="SneakPeekDark" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
+        <item name="primaryTextStyle">@style/primaryTextDark</item>
+        <item name="secondaryTextStyle">@style/secondaryTextDark</item>
+        <item name="graphTextColor">@color/chartTextColorDark</item>
+        <item name="graphColor">@color/chartColorDarkPrimary</item>
+        <item name="graphColorAccumulated">@color/chartColorDarkSecondary</item>
     </style>
 
     <style name="SneakPeekDarkTransparentStatusBar" parent="SneakPeekDark" />
 
     <style name="SneakPeekLightTransparentStatusBar" parent="SneakPeekLight" />
 
-    <style name="SneakPeekDetailInfoText" parent="TextAppearance.AppCompat.Medium">
-        <!--<item name="android:fontFamily">sans-serif</item>-->
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">#de000000</item>
+    <style name="primaryTextLight" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+
+    <style name="secondaryTextLight" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textColor">@color/secondary_text</item>
+    </style>
+
+    <style name="primaryTextDark" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
+    <style name="secondaryTextDark" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 </resources>

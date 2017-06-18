@@ -7,7 +7,8 @@
 
     <TextView
         android:id="@+id/actor_list_item_character"
-        style="@style/SneakPeekDetailInfoText"
+        style="?attr/primaryTextStyle"
+        android:textSize="18sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -18,7 +19,8 @@
 
     <TextView
         android:id="@+id/actor_list_item_name"
-        style="@style/SneakPeekDetailInfoText"
+        style="?attr/primaryTextStyle"
+        android:textSize="18sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
