@@ -1,10 +1,12 @@
-# Sneak Peak App for the Sneak Previw at the Cineplex Potsdamer Platz
+# SneakPeak App 
+
+Show the movie predictions as well as other information for the SneakPreview at the Cineplex Potsdamer Platz, Berlin.
 
 ## Todo
 * Recreate statistics upon first start - fix crash with diagramm
-** https://stackoverflow.com/questions/14223270/fragment-member-variables-getting-null-when-accessed-in-onpageselected
-** https://stackoverflow.com/questions/9727173/support-fragmentpageradapter-holds-reference-to-old-fragments
-** https://stackoverflow.com/questions/11631408/android-fragment-getactivity-sometime-returns-null
+  * https://stackoverflow.com/questions/14223270/fragment-member-variables-getting-null-when-accessed-in-onpageselected
+  * https://stackoverflow.com/questions/9727173/support-fragmentpageradapter-holds-reference-to-old-fragments
+  * https://stackoverflow.com/questions/11631408/android-fragment-getactivity-sometime-returns-null
 
 ## New Future
 * Differentiate between distributor and studio
