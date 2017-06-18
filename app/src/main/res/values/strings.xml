@@ -16,9 +16,7 @@
     <string name="dialog_about_github_logo">Github Logo</string>
     <string name="movie_list_item_dummy_number">1.</string>
 
-    <string name="sync_account_type">sneakpeek.sneak.de</string>
-    <string name="content_authority">de.sneak.sneakpeek.provider</string>
-    <string name="fragment_name_movies">Movies</string>
+    <string name="fragment_name_movies">Prediction</string>
     <string name="fragment_name_studios">Studios</string>
     <string name="fragment_name_previous_movies">Previous Movies</string>
     <string name="actual_week">Week %1$s - %2$s</string>
@@ -29,10 +27,9 @@
     <string name="fragment_name_statistics">Statistics</string>
     <string name="statistic_fragment_cumulative_distribution_description">Probability of up until n-th prediction is correct</string>
     <string name="statistic_fragment_distribution_description">Probability of n-th prediction is correct</string>
-    <string name="statistic_fragment_dataset_size">Dataset size:</string>
     <string name="fragment_statistics_total_predictions">Total Predictions:</string>
     <string name="fragment_statistics_studios_number">Number of Studios:</string>
     <string name="fragment_statistics_unique_predictions">Unique Predictions:</string>
-    <string name="fragment_statistics_actual_movies">Actual Movies:</string>
+    <string name="fragment_statistics_actual_movies">Previous Movies:</string>
     <string name="activity_detail_vote_average_na">-</string>
 </resources>

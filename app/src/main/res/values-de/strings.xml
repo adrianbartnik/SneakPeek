@@ -18,11 +18,20 @@
     <string name="dialog_about_github_logo">Github Logo</string>
     <string name="movie_list_item_dummy_number">1.</string>
 
-    <string name="fragment_name_movies">Filme</string>
+    <string name="fragment_name_movies">Prognose</string>
     <string name="fragment_name_studios">Studios</string>
-    <string name="fragment_name_previous_movies">Vergangene Filme</string>
+    <string name="fragment_name_previous_movies">Gelaufene Filme</string>
     <string name="actual_week">Woche %1$s - %2$s</string>
     <string name="activity_detail_budget_na">NA</string>
     <string name="dialog_about_title">Über</string>
     <string name="dialog_about_text">SneakPeek zeigt die Filmvorhersage für die Sneakpreview für das Cineplex am Potsdamer Platzshows, die Liste der dazugehörigen Studios sowie tatsächlich gelaufenen Filme der jüngsten Vergangenheit.\n\nVersion %1$s</string>
+    <string name="activity_detail_vote_average_na">-</string>
+    <string name="banana_image">Bananaaaa</string>
+    <string name="fragment_name_statistics">Statistik</string>
+    <string name="fragment_statistics_actual_movies">Gelaufene Filme</string>
+    <string name="fragment_statistics_studios_number">Anzahl der Studios</string>
+    <string name="fragment_statistics_total_predictions">Anzahl Prognosen</string>
+    <string name="fragment_statistics_unique_predictions">Unique Prognosen</string>
+    <string name="statistic_fragment_distribution_description">WK n-te Vorhersage richtige</string>
+    <string name="statistic_fragment_cumulative_distribution_description">WK bis zur n-ten Vorhersage richtig</string>
 </resources>
